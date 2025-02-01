@@ -1,0 +1,11 @@
+[build]
+builder = "nixpacks"
+buildCommand = "cd backend && pip install -r requirements.txt && pip install -e ."
+
+[deploy]
+startCommand = "cd backend && uvicorn src.main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/api/v1/health"
+restartPolicyType = "on_failure"
+
+[nixpacks]
+python_version = "3.10"
