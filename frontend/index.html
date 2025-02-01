@@ -3,18 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/app-icon.svg" />
-    <link rel="apple-touch-icon" href="/app-icon.svg">
-<meta name="theme-color" content="#15803d">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#15803d" />
+    <meta name="description" content="Verified Islamic Q&A from authentic sources" />
+    
+    <!-- PWA meta tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
     <title>AskSunna - Verified Answers</title>
     <script>
-      // Check if theme exists in localStorage
-      const theme = localStorage.getItem('theme');
-      // If theme is explicitly set to dark, or if no theme is set and system prefers dark
-      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
+      // Theme check code (existing)
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove('dark')
+      }
+      
+      // Register Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
       }
     </script>
   </head>
