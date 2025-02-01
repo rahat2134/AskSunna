@@ -3,9 +3,11 @@ uvicorn==0.27.1
 python-dotenv==1.0.1
 sentence-transformers==2.2.2
 huggingface-hub==0.19.4
-transformers>=4.36.2
+transformers==4.36.2
 lancedb==0.4.0
 google-generativeai==0.3.2
 pydantic==2.6.1
 torch>=2.0.0
--e .
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.0.0
