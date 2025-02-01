@@ -13,6 +13,10 @@ import traceback
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+logger.info("Starting AskSunna API server...")
+logger.info(f"PYTHONPATH: {os.getenv('PYTHONPATH')}")
+logger.info(f"Current directory: {os.getcwd()}")
+
 # Add project root to Python path
 project_root = Path(__file__).parents[2]
 sys.path.append(str(project_root))
@@ -46,13 +50,15 @@ app.add_middleware(
 
 # Global variable for RAG instance
 rag_instance = None
+rag_initialized = False
 
 def get_rag():
-    global rag_instance
-    if rag_instance is None:
+    global rag_instance, rag_initialized
+    if not rag_initialized:
         try:
             logger.info("Initializing RAG system...")
             rag_instance = IslamicRAG()
+            rag_initialized = True
             logger.info("RAG system initialized successfully!")
         except Exception as e:
             logger.error(f"Error initializing RAG system: {str(e)}")
@@ -133,7 +139,11 @@ async def ask_question(request: QuestionRequest):
 @app.get("/api/v1/health")
 async def health_check():
     """Check API health status without initializing RAG"""
-    return {"status": "healthy", "version": "1.0.0"}
+    return {
+        "status": "healthy",
+        "version": "1.0.0",
+        "rag_initialized": rag_initialized
+    }
 
 if __name__ == "__main__":
     import uvicorn
