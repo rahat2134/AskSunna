@@ -26,7 +26,7 @@ app = FastAPI(
 # Get allowed origins from environment variable or use default
 ALLOWED_ORIGINS = os.getenv(
     "ALLOWED_ORIGINS",
-    "http://localhost:5173,http://localhost:4173,https://asksunna.netlify.app"
+    "http://localhost:5173,http://localhost:4173,https://asksunnah.netlify.app"
 ).split(",")
 
 # Add CORS middleware with proper configuration
