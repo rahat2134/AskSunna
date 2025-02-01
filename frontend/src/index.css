@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-arabic {
+  font-family: 'Amiri', serif;
+  direction: rtl;
+}
+
+/* Add smooth transitions for theme changes */
+* {
+  transition: background-color 0.2s, border-color 0.2s;
+}
