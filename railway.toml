@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "cd backend && python --version && python -m ensurepip --upgrade && pip install -r requirements.txt && pip install -e ."
+buildCommand = "cd backend && python3 --version && python3 -m ensurepip --upgrade && pip install -r requirements.txt && pip install -e ."
 
 [deploy]
 startCommand = "cd backend && uvicorn src.main:app --host 0.0.0.0 --port $PORT"
