@@ -1,9 +1,9 @@
-# backend/src/main.py
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing import List, Optional
+import os
 import sys
 from pathlib import Path
 
@@ -17,23 +17,22 @@ from data.src.config.env_manager import env_manager
 # Initialize FastAPI app with metadata
 app = FastAPI(
     title="AskSunna API",
-    description="""
-    Islamic Q&A Platform powered by RAG and LLM.
-    
-    Features:
-    - Question answering using authenticated sources
-    - Source filtering (Quran/Hadith)
-    - Bilingual support (Arabic/English)
-    """,
+    description="Islamic Q&A Platform powered by RAG and LLM.",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
 
-# Add CORS middleware
+# Get allowed origins from environment variable or use default
+ALLOWED_ORIGINS = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:5173,http://localhost:4173,https://asksunna.netlify.app"
+).split(",")
+
+# Add CORS middleware with proper configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  #(TO Do: Change it in production)
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -108,4 +107,5 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run(app, host="0.0.0.0", port=port)

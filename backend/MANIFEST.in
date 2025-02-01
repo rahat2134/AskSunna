@@ -1,0 +1,2 @@
+include data/processed/*.json
+include data/raw/*.json
