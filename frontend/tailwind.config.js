@@ -4,9 +4,13 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',  // This is important!
+  darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'islamic-pattern': "url('/islamic-pattern.svg')",
+      },
+    },
   },
   plugins: [],
 }

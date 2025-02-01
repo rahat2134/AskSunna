@@ -1,0 +1,22 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <circle cx="256" cy="256" r="248" fill="#15803d"/>
+  
+  <!-- Inner Circle -->
+  <circle cx="256" cy="256" r="224" fill="#22c55e"/>
+  
+  <!-- Mosque Dome -->
+  <path d="M156 256 Q256 156 356 256 L356 356 L156 356 Z" fill="white"/>
+  <path d="M226 256 Q256 226 286 256 L286 356 L226 356 Z" fill="#15803d"/>
+  
+  <!-- Minaret -->
+  <rect x="241" y="156" width="30" height="100" fill="white"/>
+  <path d="M236 156 L256 126 L276 156 Z" fill="white"/>
+  
+  <!-- Arch Details -->
+  <path d="M166 266 Q256 186 346 266" fill="none" stroke="white" stroke-width="4"/>
+  
+  <!-- Verified Badge -->
+  <circle cx="256" cy="316" r="30" fill="white"/>
+  <path d="M244 316 L252 324 L268 308" stroke="#15803d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

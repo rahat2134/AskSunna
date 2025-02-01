@@ -1,0 +1,34 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="248" fill="#15803d" /> <!-- Tailwind green-700 -->
+  
+  <!-- Inner Light Circle -->
+  <circle cx="256" cy="256" r="224" fill="#22c55e" /> <!-- Tailwind green-500 -->
+  
+  <!-- Open Book Base -->
+  <path d="M160 186 L256 156 L352 186 L352 366 L256 396 L160 366 Z" fill="#f8fafc" /> <!-- Tailwind slate-50 -->
+  
+  <!-- Book Pages Left -->
+  <path d="M160 186 L256 156 L256 396 L160 366 Z" fill="#e2e8f0" /> <!-- Tailwind slate-200 -->
+  
+  <!-- Arabic Calligraphy Stylized Lines (Right Page) -->
+  <path d="M270 236 L338 226 M270 266 L338 256 M270 296 L338 286" 
+        stroke="#15803d" 
+        stroke-width="12" 
+        stroke-linecap="round" />
+        
+  <!-- Arabic Calligraphy Stylized Lines (Left Page) -->
+  <path d="M174 236 L242 226 M174 266 L242 256 M174 296 L242 286" 
+        stroke="#15803d" 
+        stroke-width="12" 
+        stroke-linecap="round" />
+        
+  <!-- Verified Checkmark -->
+  <circle cx="256" cy="346" r="30" fill="#15803d" />
+  <path d="M244 346 L252 354 L268 338" 
+        stroke="white" 
+        stroke-width="6" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none" />
+</svg>
