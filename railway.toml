@@ -1,11 +1,30 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pip install fastapi uvicorn"
+buildCommand = """
+cd backend && \
+apt-get update && \
+apt-get install -y python3 python3-pip && \
+python3 --version && \
+pip install -r requirements.txt && \
+pip install -e . && \
+cd .. && \
+cp -r data backend/
+"""
 
 [deploy]
-startCommand = "cd backend/src && uvicorn main:app --host 0.0.0.0 --port $PORT"
+startCommand = "cd backend && PYTHONPATH=/app/backend uvicorn src.main:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 120"
 healthcheckPath = "/api/v1/health"
-healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+healthcheckTimeout = 60
+healthcheckInterval = 30
 
 [nixpacks]
 python_version = "3.10"
+
+[[build.env]]
+name = "NIXPACKS_PYTHON_VERSION"
+value = "3.10"
+
+[[build.env]]
+name = "PYTHONPATH"
+value = "/app/backend"
