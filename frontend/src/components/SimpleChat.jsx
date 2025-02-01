@@ -29,7 +29,15 @@ const SimpleChat = () => {
   }, [isDark]);
 
   const toggleDarkMode = () => {
-    setIsDark(!isDark);
+    console.log('Toggling dark mode, current:', isDark);
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+    if (newTheme) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
   };
 
   const scrollToBottom = () => {

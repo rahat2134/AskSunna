@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AskSunna - Verified Answers</title>
     <script>
-      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark')
+      // Check if theme exists in localStorage
+      const theme = localStorage.getItem('theme');
+      // If theme is explicitly set to dark, or if no theme is set and system prefers dark
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
       } else {
-        document.documentElement.classList.remove('dark')
+        document.documentElement.classList.remove('dark');
       }
     </script>
   </head>
