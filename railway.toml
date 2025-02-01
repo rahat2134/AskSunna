@@ -12,10 +12,11 @@ cp -r data backend/
 """
 
 [deploy]
-startCommand = "cd backend && PYTHONPATH=/app/backend uvicorn src.main:app --host 0.0.0.0 --port $PORT"
+startCommand = "cd backend && PYTHONPATH=/app/backend uvicorn src.main:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 120"
 healthcheckPath = "/api/v1/health"
 restartPolicyType = "on_failure"
-healthcheckTimeout = 180
+healthcheckTimeout = 60
+healthcheckInterval = 30
 
 [nixpacks]
 python_version = "3.10"

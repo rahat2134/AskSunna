@@ -6,6 +6,12 @@ from typing import List, Optional
 import os
 import sys
 from pathlib import Path
+import logging
+import traceback
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Add project root to Python path
 project_root = Path(__file__).parents[2]
@@ -29,7 +35,7 @@ ALLOWED_ORIGINS = os.getenv(
     "http://localhost:5173,http://localhost:4173,https://asksunnah.netlify.app"
 ).split(",")
 
-# Add CORS middleware with proper configuration
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
@@ -38,8 +44,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize RAG system
-rag = IslamicRAG()
+# Global variable for RAG instance
+rag_instance = None
+
+def get_rag():
+    global rag_instance
+    if rag_instance is None:
+        try:
+            logger.info("Initializing RAG system...")
+            rag_instance = IslamicRAG()
+            logger.info("RAG system initialized successfully!")
+        except Exception as e:
+            logger.error(f"Error initializing RAG system: {str(e)}")
+            logger.error(traceback.format_exc())
+            raise
+    return rag_instance
 
 # Request/Response Models
 class QuestionRequest(BaseModel):
@@ -83,6 +102,12 @@ async def ask_question(request: QuestionRequest):
     - **sect**: Filter by 'sunni' or 'shia' (optional)
     """
     try:
+        logger.info(f"Processing question: {request.question}")
+        logger.info(f"Source type: {request.source_type}")
+        
+        # Get or initialize RAG
+        rag = get_rag()
+        
         # Validate source_type
         if request.source_type and request.source_type not in ['hadith', 'quran']:
             raise HTTPException(
@@ -94,15 +119,20 @@ async def ask_question(request: QuestionRequest):
             query=request.question,
             source_type=request.source_type
         )
+        logger.info("Successfully generated answer")
         return AnswerResponse(answer=answer, sources=sources)
+        
     except ValueError as e:
+        logger.error(f"Validation error: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
+        logger.error(f"Error processing question: {str(e)}")
+        logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/v1/health")
 async def health_check():
-    """Check API health status"""
+    """Check API health status without initializing RAG"""
     return {"status": "healthy", "version": "1.0.0"}
 
 if __name__ == "__main__":
