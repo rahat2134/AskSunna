@@ -1,0 +1,69 @@
+# Environment variables
+.env
+*.env
+config.local.yml
+config.prod.yml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-log.txt
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+.mypy_cache/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# LanceDB files
+islamic_db/
+*.lance
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Models and embeddings
+*.gguf
+.ollama/
+*.pt
+*.pth
+*.bin
+.cache/
+
+# Logs
+*.log
+logs/
+log/
+
+# Local development
+.local/
+*.sqlite
+*.db
+
+# Documentation generated
+docs/_build/
+site/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Test coverage
+coverage/
+.coverage
+coverage.xml
