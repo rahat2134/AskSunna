@@ -3,6 +3,7 @@ import lancedb
 import pyarrow as pa
 import numpy as np
 import os
+import logging
 import time
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -11,17 +12,40 @@ from pathlib import Path
 from ..models.base import BaseLLM
 from ..models.gemini import GeminiLLM
 
+logger = logging.getLogger(__name__)
+
 class IslamicRAG:
     def __init__(self, 
                  data_path: str = str(Path(__file__).parents[2] / "processed" / "islamic_data.json"),
                  db_path: str = str(Path(__file__).parents[3] / "islamic_db"),
                  database_dir: str = None,
-                 llm: Optional[BaseLLM] = None):  # Add llm parameter with type hint
+                 llm: Optional[BaseLLM] = None):
+
         self.model = SentenceTransformer("all-mpnet-base-v2")
-        db_path = database_dir or db_path  # Use provided database_dir if available
+        
+        # Determine database path with priority order:
+        # 1. Environment variable
+        # 2. Provided database_dir
+        # 3. Default db_path
+        db_path = (
+            os.getenv('LANCEDB_CONFIG_DIR') or 
+            database_dir or 
+            db_path
+        )
+
+        # Ensure directory exists
+        os.makedirs(db_path, exist_ok=True)
+
+        # Try to set permissions if possible (might fail in some environments)
+        try:
+            os.chmod(db_path, 0o777)  # Full permissions
+        except Exception as e:
+            logger.warning(f"Could not set permissions for {db_path}: {str(e)}")
+
+        logger.info(f"Using database path: {db_path}")
         self.db = lancedb.connect(db_path)
         self.vector_dim = 768
-        self.llm = llm if llm is not None else GeminiLLM()  # Fix this line
+        self.llm = llm if llm is not None else GeminiLLM()
         self.setup_database(data_path)
     
     def determine_type(self, source: str) -> str:
