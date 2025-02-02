@@ -2,24 +2,29 @@ services:
   - type: web
     name: asksunna-backend
     env: python
-    region: oregon  # US West Coast for better latency
+    plan: free
+    region: oregon
     buildCommand: |
+      # Install Python dependencies
       cd backend && \
       pip install -r requirements.txt && \
-      pip install -e . && \
-      mkdir -p /tmp/lancedb && \
+      pip install -e .
+      
+      # Create necessary directories
+      mkdir -p /opt/render/project/src/backend/data/processed
+      mkdir -p /tmp/lancedb
       chmod 777 /tmp/lancedb
-    startCommand: |
-      cd backend && \
-      LANCEDB_CONFIG_DIR=/tmp/lancedb \
-      python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT
-    autoDeploy: false  # Manual deploys for better control
+      
+      # Copy data files to correct location
+      cp -r data/* /opt/render/project/src/backend/data/
+    
+    startCommand: cd backend && LANCEDB_CONFIG_DIR=/tmp/lancedb python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    
+    # Optimize for free tier
+    autoDeploy: false
     healthCheckPath: /api/v1/health
-    healthCheckTimeout: 120
-    disk:
-      name: lancedb-data
-      mountPath: /tmp/lancedb
-      sizeGB: 1
+    healthCheckTimeout: 100
+    
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
@@ -28,9 +33,7 @@ services:
       - key: DATA_DIR
         value: /opt/render/project/src/backend/data
       - key: RENDER
-        value: 1
-      - key: LANCEDB_CONFIG_DIR  # Added this
-        value: /tmp/lancedb
+        value: "true"
       - key: ALLOWED_ORIGINS
         sync: false
       - key: GOOGLE_API_KEY
