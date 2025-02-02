@@ -6,6 +6,15 @@ import hashlib
 import json
 from ..config.env_manager import env_manager
 from .base import BaseLLM
+import os 
+
+try:
+    from ..config.env_manager import env_manager
+    GOOGLE_API_KEY = env_manager.gemini_key
+except ImportError:
+    GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+    if not GOOGLE_API_KEY:
+        raise ValueError("GOOGLE_API_KEY not found in environment variables")
 
 class GeminiLLM(BaseLLM):
     def __init__(self):

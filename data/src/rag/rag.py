@@ -3,6 +3,7 @@ import lancedb
 import pyarrow as pa
 import numpy as np
 import os
+import time
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from typing import Dict, List, Optional, Tuple
@@ -14,11 +15,13 @@ class IslamicRAG:
     def __init__(self, 
                  data_path: str = str(Path(__file__).parents[2] / "processed" / "islamic_data.json"),
                  db_path: str = str(Path(__file__).parents[3] / "islamic_db"),
-                 llm: Optional[BaseLLM] = None):
+                 database_dir: str = None,
+                 llm: Optional[BaseLLM] = None):  # Add llm parameter with type hint
         self.model = SentenceTransformer("all-mpnet-base-v2")
+        db_path = database_dir or db_path  # Use provided database_dir if available
         self.db = lancedb.connect(db_path)
         self.vector_dim = 768
-        self.llm = llm or GeminiLLM()  # Use provided LLM or create Gemini instance
+        self.llm = llm if llm is not None else GeminiLLM()  # Fix this line
         self.setup_database(data_path)
     
     def determine_type(self, source: str) -> str:

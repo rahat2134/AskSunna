@@ -9,12 +9,13 @@ pip install -r requirements.txt && \
 pip install -e . && \
 cd .. && \
 mkdir -p /app/backend/data/processed && \
-cp -r data/* /app/backend/data/
+cp -r data/* /app/backend/data/ && \
+mkdir -p /tmp/lancedb && \
+chmod 777 /tmp/lancedb
 """
 
 [deploy]
-# Simplified start command using python -m
-startCommand = "cd backend && python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT"
+startCommand = "cd backend && LANCEDB_CONFIG_DIR=/tmp/lancedb python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT"
 healthcheckPath = "/api/v1/health"
 restartPolicyType = "on_failure"
 healthcheckTimeout = 120
@@ -31,3 +32,7 @@ value = "/app/backend"
 [[build.env]]
 name = "DATA_DIR" 
 value = "/app/backend/data"
+
+[[build.env]]
+name = "LANCEDB_CONFIG_DIR"
+value = "/tmp/lancedb"

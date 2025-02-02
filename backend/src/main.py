@@ -1,11 +1,17 @@
+import sys
+from pathlib import Path
+import time
+
+# Add project root to Python path
+project_root = Path(__file__).parents[2]
+sys.path.append(str(project_root))
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from typing import List, Optional
 import os
-import sys
-from pathlib import Path
 import logging
 import traceback
 from contextlib import asynccontextmanager
@@ -21,9 +27,6 @@ logger.info(f"Current directory: {os.getcwd()}")
 DATA_DIR = os.getenv('DATA_DIR', str(Path(__file__).parents[2] / "data"))
 logger.info(f"Using data directory: {DATA_DIR}")
 
-# Add project root to Python path
-project_root = Path(__file__).parents[2]
-sys.path.append(str(project_root))
 
 from data.src.rag.rag import IslamicRAG
 from data.src.config.env_manager import env_manager
@@ -87,7 +90,7 @@ def get_rag():
                 try:
                     rag_instance = IslamicRAG(
                         data_path=data_path,
-                        db_path=os.path.join(os.path.dirname(DATA_DIR), "islamic_db")
+                        database_dir=os.path.join("/tmp", "lancedb")
                     )
                     logger.info("RAG system initialized successfully!")
                     break
