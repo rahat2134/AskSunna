@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: asksunna-backend
+    env: python
+    region: oregon  # US West Coast for better latency
+    buildCommand: |
+      cd backend && \
+      pip install -r requirements.txt && \
+      pip install -e .
+    startCommand: cd backend && python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    autoDeploy: false  # Manual deploys for better control
+    healthCheckPath: /api/v1/health
+    healthCheckTimeout: 120
+    disk:
+      name: lancedb-data
+      mountPath: /tmp/lancedb
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: PYTHONPATH
+        value: /opt/render/project/src/backend
+      - key: DATA_DIR
+        value: /opt/render/project/src/backend/data
+      - key: RENDER
+        value: 1
+      - key: ALLOWED_ORIGINS
+        sync: false  # Indicates this should be set manually in dashboard
+      - key: GOOGLE_API_KEY
+        sync: false  # Indicates this should be set manually in dashboard

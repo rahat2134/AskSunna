@@ -80,6 +80,10 @@ def get_rag():
             data_path = os.path.join(DATA_DIR, "processed", "islamic_data.json")
             logger.info(f"Looking for data at: {data_path}")
             
+            # Determine database directory based on environment
+            database_dir = "/tmp/lancedb" if os.getenv("RENDER") else "./islamic_db"
+            logger.info(f"Using database directory: {database_dir}")
+            
             if not os.path.exists(data_path):
                 logger.error(f"Data file not found at {data_path}")
                 available_files = os.listdir(os.path.dirname(data_path))
@@ -90,7 +94,7 @@ def get_rag():
                 try:
                     rag_instance = IslamicRAG(
                         data_path=data_path,
-                        database_dir=os.path.join("/tmp", "lancedb")
+                        db_path=database_dir  # Using the environment-aware path
                     )
                     logger.info("RAG system initialized successfully!")
                     break
