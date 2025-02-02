@@ -9,18 +9,12 @@ pip install -r requirements.txt && \
 pip install -e . && \
 cd .. && \
 mkdir -p /app/backend/data/processed && \
-cp -r data/* /app/backend/data/ && \
-which uvicorn  # Print uvicorn location
+cp -r data/* /app/backend/data/
 """
 
 [deploy]
-# Use full path to Python and install location
-startCommand = """
-cd backend && \
-export PATH="/usr/local/bin:$PATH" && \
-which uvicorn && \
-PYTHONPATH=/app/backend python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 120
-"""
+# Simplified start command using python -m
+startCommand = "cd backend && python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT"
 healthcheckPath = "/api/v1/health"
 restartPolicyType = "on_failure"
 healthcheckTimeout = 120
@@ -35,9 +29,5 @@ name = "PYTHONPATH"
 value = "/app/backend"
 
 [[build.env]]
-name = "DATA_DIR"
+name = "DATA_DIR" 
 value = "/app/backend/data"
-
-[[build.env]]
-name = "PATH"
-value = "/usr/local/bin:$PATH"
