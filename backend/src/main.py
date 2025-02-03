@@ -80,16 +80,35 @@ def get_rag():
             data_path = os.path.join(DATA_DIR, "processed", "islamic_data.json")
             logger.info(f"Looking for data at: {data_path}")
             
+            # Add debug information
+            logger.info(f"Current working directory: {os.getcwd()}")
+            logger.info(f"DATA_DIR value: {DATA_DIR}")
+            logger.info(f"Full data path: {os.path.abspath(data_path)}")
+            
             # Determine database directory based on environment
             database_dir = "/tmp/lancedb" if os.getenv("RENDER") else "./islamic_db"
             logger.info(f"Using database directory: {database_dir}")
             
             if not os.path.exists(data_path):
                 logger.error(f"Data file not found at {data_path}")
-                available_files = os.listdir(os.path.dirname(data_path))
-                logger.info(f"Available files in directory: {available_files}")
+                # Try to list parent directories
+                try:
+                    parent_dir = os.path.dirname(data_path)
+                    logger.info(f"Parent directory: {parent_dir}")
+                    if os.path.exists(parent_dir):
+                        available_files = os.listdir(parent_dir)
+                        logger.info(f"Files in {parent_dir}: {available_files}")
+                    else:
+                        logger.error(f"Parent directory {parent_dir} does not exist")
+                        # Try to list the DATA_DIR
+                        if os.path.exists(DATA_DIR):
+                            logger.info(f"Files in DATA_DIR: {os.listdir(DATA_DIR)}")
+                        else:
+                            logger.error(f"DATA_DIR {DATA_DIR} does not exist")
+                except Exception as e:
+                    logger.error(f"Error listing directories: {str(e)}")
                 raise FileNotFoundError(f"Data file not found at {data_path}")
-                
+            
             for attempt in range(3):
                 try:
                     rag_instance = IslamicRAG(
