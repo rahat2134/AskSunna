@@ -86,7 +86,7 @@ def get_rag():
             logger.info(f"Full data path: {os.path.abspath(data_path)}")
             
             # Determine database directory based on environment
-            database_dir = "/tmp/lancedb" if os.getenv("RAILWAY_ENVIRONMENT") else "./islamic_db"
+            database_dir = "/tmp/lancedb" if os.getenv("RENDER") else "./islamic_db"
             logger.info(f"Using database directory: {database_dir}")
             
             if not os.path.exists(data_path):
