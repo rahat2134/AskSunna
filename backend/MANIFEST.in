@@ -1,2 +1,2 @@
-include data/processed/*.json
-include data/raw/*.json
+recursive-include data/processed *.json
+recursive-include data/raw *.json
