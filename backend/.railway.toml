@@ -1,0 +1,7 @@
+# backend/.railway.toml
+[build]
+builder = "python"
+python_version = "3.10.0"
+
+[deploy]
+startCommand = "python3 -m uvicorn src.main:app --host 0.0.0.0 --port $PORT"
