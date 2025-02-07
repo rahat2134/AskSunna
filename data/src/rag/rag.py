@@ -148,6 +148,9 @@ class IslamicRAG:
         # Get relevant sources
         sources = self.search(query, source_type, limit)
         
+        if not sources:
+            return "I cannot provide an answer as I don't have relevant verified sources about this topic in my database.", []
+
         try:
             # Generate answer using LLM
             answer = await self.llm.generate(query, context=sources)
