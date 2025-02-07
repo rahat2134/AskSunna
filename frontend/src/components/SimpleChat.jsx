@@ -57,7 +57,11 @@ const SimpleChat = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/ask`, {
+      const apiUrl = window.location.protocol === 'https:' 
+        ? import.meta.env.VITE_API_URL.replace('http://', 'https://') 
+        : import.meta.env.VITE_API_URL;
+      
+      const response = await fetch(`${apiUrl}/api/v1/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
