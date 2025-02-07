@@ -10,7 +10,7 @@ const SimpleChat = () => {
     // Check localStorage and system preference on initial load
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme');
-      return savedTheme === 'dark' || 
+      return savedTheme === 'dark' ||
         (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
     }
     return false;
@@ -88,16 +88,18 @@ const SimpleChat = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
       {/* Enhanced Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm py-4 px-6">
+      <header className="bg-white dark:bg-gray-800 shadow-sm py-3 px-4 sm:py-4 sm:px-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-3">
+          {/* Reduce spacing in logo area */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
             <div className="flex items-center">
-              <Book className="h-6 w-6 text-green-600 dark:text-green-500" />
-              <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200 ml-2">
+              <Book className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 dark:text-green-500" />
+              <h1 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 ml-2">
                 AskSunnah
               </h1>
             </div>
-            <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full dark:bg-green-900 dark:text-green-100">
+            {/* Make badge more compact on mobile */}
+            <span className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full dark:bg-green-900 dark:text-green-100">
               Verified Sources
             </span>
           </div>
@@ -127,15 +129,16 @@ const SimpleChat = () => {
       {/* Chat Area with Islamic Patterns */}
       <div className="flex-1 overflow-y-auto p-6 bg-[url('/islamic-pattern.svg')] bg-repeat bg-opacity-5">
         {messages.length === 0 ? (
-          <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 text-center">
-            <Book className="h-12 w-12 mx-auto mb-4 text-green-600 dark:text-green-500" />
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-              Welcome to AskSunnah
+          <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 sm:p-8 text-center">
+            <Book className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 text-green-600 dark:text-green-500" />
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              Welcome to AskSunna
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
               Ask questions about Islam and receive answers from authentic sources including Quran and verified Hadiths
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 text-sm">
+            {/* Update features list layout */}
+            <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="flex items-center justify-center">
                 <Check className="h-4 w-4 text-green-600 mr-2" />
                 <span>Verified Sources</span>
@@ -154,14 +157,13 @@ const SimpleChat = () => {
           <div className="space-y-6">
             {messages.map((message, idx) => (
               <div key={idx} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-2xl rounded-lg p-4 ${
-                  message.type === 'user' 
-                    ? 'bg-green-600 text-white' 
-                    : 'bg-white dark:bg-gray-800 shadow-sm dark:text-gray-200'
-                }`}>
+                <div className={`max-w-2xl rounded-lg p-4 ${message.type === 'user'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-white dark:bg-gray-800 shadow-sm dark:text-gray-200'
+                  }`}>
                   {/* Message content */}
                   <p className="whitespace-pre-wrap">{message.content}</p>
-                  
+
                   {/* Enhanced Source Display */}
                   {message.sources && (
                     <div className="mt-4 space-y-3">
@@ -198,31 +200,31 @@ const SimpleChat = () => {
       </div>
 
       {/* Enhanced Input Area */}
-      <div className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 p-4">
+      <div className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 p-2 sm:p-4">
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto flex gap-2">
           <select
             value={sourceType}
             onChange={(e) => setSourceType(e.target.value)}
-            className="px-3 py-2 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg text-sm dark:text-gray-200"
+            className="w-24 sm:w-auto px-2 sm:px-3 py-2 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg text-xs sm:text-sm dark:text-gray-200"
           >
             <option value="all">All Sources</option>
-            <option value="quran">Quran Only</option>
-            <option value="hadith">Hadith Only</option>
+            <option value="quran">Quran</option>
+            <option value="hadith">Hadith</option>
           </select>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question about Islam..."
-            className="flex-1 px-4 py-2 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg dark:text-gray-200 dark:placeholder-gray-400"
+            placeholder="Ask a question..."
+            className="flex-1 px-3 sm:px-4 py-2 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-lg text-sm dark:text-gray-200 dark:placeholder-gray-400 min-w-0"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
+            className="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
           >
-            <Send className="h-5 w-5" />
+            <Send className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </form>
       </div>
