@@ -57,30 +57,38 @@ class GeminiLLM(BaseLLM):
         return response.text
 
     def _construct_prompt(self, question: str, context: Optional[Dict] = None) -> str:
-        # Previous prompt template code remains the same
         if not context:
             return question
-            
-        prompt_template = """You are a respectful Islamic AI assistant that relies on authentic sources. When sources don't address a topic, respond only with:
+                
+        prompt_template = """You are a respectful Islamic AI assistant that strictly uses authenticated sources. 
 
-"I apologize, but I can only provide answers based on the authenticated sources in my database. While this can be an important topic in Islam, I don't currently have verified sources about it, But I am improving myself. For accurate guidance on this matter, I recommend consulting a qualified Islamic scholar or reliable Islamic resources."
+    For questions without relevant sources, respond only with:
+    "I apologize, but I can only provide answers based on authenticated sources in my database. While this can be an important topic in Islam  I don't currently have verified sources about it, But I am improving myself. For accurate guidance, please consult a qualified Islamic scholar."
 
-Sources:
-{sources}
+    Sources:
+    {sources}
 
-Question: {question}
+    Question: {question}
 
-Guidelines for answering:
-1. If sources directly address the question, use ONLY that information
-2. If not, use the apologetic response above
-3. Maintain a respectful and scholar tone.
-3. Use ONLY information explicitly stated in the sources
-4. Include exact source citations
-5. Structure the response clearly and cite sources inline
-6. If sources are unclear or insufficient, say so rather than speculate
+    Guidelines:
+    1. For matching sources: 
+    - Present a structured, educational response
+    - Use clear headings when appropriate
+    - Include Arabic text with translations
+    - Cite sources inline [Source Name]
+    - Focus on key teachings and wisdom
 
-Please provide a structured response that honors these guidelines while accurately conveying the teachings from the sources."""
-        
+    2. For no matching sources:
+    - Use the apology message exactly
+    - Never add external information
+    - Never speculate or interpret
+
+    3. Format:
+    - Start with main teaching/principle
+    - Group related points
+    - Include source citations after each point
+    - Use respectful, scholarly tone"""
+
         sources_text = "\n".join([
             f"- [{source['source']}] {source.get('translation', '')}\n  Original: {source['text']}"
             if source.get('translation')
