@@ -94,7 +94,7 @@ const SimpleChat = () => {
             <div className="flex items-center">
               <Book className="h-6 w-6 text-green-600 dark:text-green-500" />
               <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200 ml-2">
-                AskSunna
+                AskSunnah
               </h1>
             </div>
             <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full dark:bg-green-900 dark:text-green-100">
@@ -130,7 +130,7 @@ const SimpleChat = () => {
           <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 text-center">
             <Book className="h-12 w-12 mx-auto mb-4 text-green-600 dark:text-green-500" />
             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-              Welcome to AskSunna
+              Welcome to AskSunnah
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Ask questions about Islam and receive answers from authentic sources including Quran and verified Hadiths
