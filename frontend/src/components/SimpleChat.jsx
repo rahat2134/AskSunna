@@ -132,7 +132,7 @@ const SimpleChat = () => {
           <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 sm:p-8 text-center">
             <Book className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 text-green-600 dark:text-green-500" />
             <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-              Welcome to AskSunna
+              Welcome to AskSunnah
             </h2>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
               Ask questions about Islam and receive answers from authentic sources including Quran and verified Hadiths
