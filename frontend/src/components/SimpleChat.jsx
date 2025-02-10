@@ -6,6 +6,7 @@ import MessageInput from './chat/MessageInput';
 import Message from './chat/Message';
 import WelcomeScreen from './chat/WelcomeScreen';
 import AskSunnahMessage from './chat/AskSunnahMessage';
+import TypingIndicator from './chat/TypingIndicator';
 
 const SimpleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -155,11 +156,7 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
             ))}
           </div>
         )}
-        {isLoading && (
-          <div className="flex justify-center py-4">
-            <Loader2 className="animate-spin text-green-600 dark:text-green-500" />
-          </div>
-        )}
+        {isLoading && <TypingIndicator />}
         <div ref={messagesEndRef} />
       </div>
 
