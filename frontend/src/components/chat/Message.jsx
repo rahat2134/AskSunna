@@ -10,7 +10,7 @@ const Message = ({ message }) => {
                 }`}>
                 <p className="whitespace-pre-wrap">{message.content}</p>
 
-                {message.sources && (
+                {message.sources && message.sources.length > 0 && (
                     <div className="mt-4 space-y-3">
                         <div className="text-sm font-medium text-green-700 dark:text-green-400 flex items-center">
                             <Book className="h-4 w-4 mr-2" />
