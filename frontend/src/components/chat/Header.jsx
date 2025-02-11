@@ -1,11 +1,11 @@
 // frontend/src/components/chat/Header.jsx
 import React, { useState } from 'react';
-import { Book, Sun, Moon, Crown, ChevronDown } from 'lucide-react';
+import { Book, Sun, Moon, Crown, ChevronDown, Download } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLocation } from 'react-router-dom';
 import ProAccessModal from '../ui/ProAccessModal';
 
-const Header = ({ isDark, toggleDarkMode }) => {
+const Header = ({ isDark, toggleDarkMode, isProMode, setIsProMode, onExport }) => {
     const { isProUser, verifyProAccess, logout } = useAuth();
     const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,6 +68,21 @@ const Header = ({ isDark, toggleDarkMode }) => {
                                 {/* Dropdown Menu */}
                                 {showDropdown && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700">
+                                        {isProUser && (
+                                            <>
+                                                <button
+                                                    onClick={() => {
+                                                        onExport('pdf');
+                                                        setShowDropdown(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                                                >
+                                                    <Download className="h-4 w-4" />
+                                                    Export as Text
+                                                </button>
+                                                <div className="border-t border-gray-200 dark:border-gray-700" />
+                                            </>
+                                        )}
                                         <button
                                             onClick={() => {
                                                 handleModeToggle();

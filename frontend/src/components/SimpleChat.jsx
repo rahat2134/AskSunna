@@ -3,7 +3,7 @@ import { Loader2, Check } from 'lucide-react';
 import { generateGeminiResponse } from '../utils/gemini';
 import Header from './chat/Header';
 import MessageInput from './chat/MessageInput';
-import Message from './chat/Message';
+import { exportToPDF } from '../utils/export';
 import WelcomeScreen from './chat/WelcomeScreen';
 import AskSunnahMessage from './chat/AskSunnahMessage';
 import TypingIndicator from './chat/TypingIndicator';
@@ -120,11 +120,25 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
     console.log(`Sharing message ${messageId}`);
   };
 
+  const handleExport = async (format) => {
+    if (!messages.length) return;
+
+    try {
+      if (format === 'pdf') {
+        await exportToPDF(messages);
+      }
+    } catch (error) {
+      console.error('Export failed:', error);
+      // You could add a toast notification here
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900">
       <Header
         isDark={isDark}
         toggleDarkMode={toggleDarkMode}
+        onExport={handleExport}
       />
 
       <div className="bg-gray-50 dark:bg-green-900/20 border-b border-gray-200 dark:border-green-100/10">
