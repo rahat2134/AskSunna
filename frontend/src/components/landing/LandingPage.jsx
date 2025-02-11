@@ -115,12 +115,12 @@ const LandingPage = () => {
             price: "9.99",
             popular: true,
             features: [
-                "Unlimited questions",
+                "Unlimited questions | Custom collections",
                 "Priority response time",
                 "Advanced source filtering",
                 "Detailed explanations",
                 "Save favorite answers",
-                "Custom collections"
+                "Download conversation"
             ],
             buttonText: "Get Pro Access",
             buttonLink: "/chat"
