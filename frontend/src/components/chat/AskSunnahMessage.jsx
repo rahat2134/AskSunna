@@ -19,8 +19,8 @@ const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
             )}
 
             <div className={`max-w-2xl rounded-lg p-4 ${message.type === 'user'
-                    ? 'bg-green-600 text-white ml-12'
-                    : 'bg-white dark:bg-gray-800 shadow-lg dark:text-gray-200'
+                ? 'bg-green-600 text-white ml-12'
+                : 'bg-white dark:bg-gray-800 shadow-lg dark:text-gray-200'
                 }`}>
                 {message.type === 'assistant' && (
                     <div className="flex items-center mb-2 text-sm text-gray-600 dark:text-gray-400">

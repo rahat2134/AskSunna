@@ -1,9 +1,16 @@
-import React from 'react'
-import SimpleChat from './components/SimpleChat'
-
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import Router from './Router';
 
 function App() {
-  return <SimpleChat />
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

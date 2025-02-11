@@ -5,8 +5,8 @@ const Message = ({ message }) => {
     return (
         <div className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-2xl rounded-lg p-4 ${message.type === 'user'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-white dark:bg-gray-800 shadow-sm dark:text-gray-200'
+                ? 'bg-green-600 text-white'
+                : 'bg-white dark:bg-gray-800 shadow-sm dark:text-gray-200'
                 }`}>
                 <p className="whitespace-pre-wrap">{message.content}</p>
 

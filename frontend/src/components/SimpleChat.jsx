@@ -7,13 +7,15 @@ import Message from './chat/Message';
 import WelcomeScreen from './chat/WelcomeScreen';
 import AskSunnahMessage from './chat/AskSunnahMessage';
 import TypingIndicator from './chat/TypingIndicator';
+import { useAuth } from '../context/AuthContext';
 
 const SimpleChat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sourceType, setSourceType] = useState('all');
-  const [isProMode, setIsProMode] = useState(false);
+  const { isProUser } = useAuth();
+  const [isProMode, setIsProMode] = useState(isProUser);
   const [hasInitialized, setHasInitialized] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -69,7 +71,7 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
     try {
       let answer, sources = [];
 
-      if (isProMode) {
+      if (isProUser) {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/ask`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -123,8 +125,6 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
       <Header
         isDark={isDark}
         toggleDarkMode={toggleDarkMode}
-        isProMode={isProMode}
-        setIsProMode={setIsProMode}
       />
 
       <div className="bg-gray-50 dark:bg-green-900/20 border-b border-gray-200 dark:border-green-100/10">
@@ -132,7 +132,7 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-green-600 dark:text-green-500" />
             <span className="text-gray-700 dark:text-green-100">
-              {isProMode
+              {isProUser
                 ? "Using verified local database of Quran and Hadith sources"
                 : "Free Version - Basic Islamic Knowledge"}
             </span>
