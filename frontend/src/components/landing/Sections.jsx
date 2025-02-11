@@ -79,7 +79,7 @@ export const ContactSection = () => (
           Our team is here to help you with any questions about AskSunnah.
         </p>
         <a
-          href="mailto:support@asksunnah.com"
+          href="mailto:asksunnah786@gmail.com"
           className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
         >
           Contact Support
