@@ -8,6 +8,8 @@ import WelcomeScreen from './chat/WelcomeScreen';
 import AskSunnahMessage from './chat/AskSunnahMessage';
 import TypingIndicator from './chat/TypingIndicator';
 import { useAuth } from '../context/AuthContext';
+import { trackEvent, ANALYTICS_EVENTS } from '../utils/analytics';
+
 
 const SimpleChat = () => {
   const [messages, setMessages] = useState([]);
@@ -63,6 +65,11 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
+    trackEvent(ANALYTICS_EVENTS.QUESTION_ASKED, {
+      source_type: sourceType,
+      is_pro: isProUser
+    });
+
     const userMessage = { type: 'user', content: input };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
@@ -105,9 +112,17 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
     }
   };
 
+  const handleSourceTypeChange = (type) => {
+    setSourceType(type);
+    trackEvent(ANALYTICS_EVENTS.SOURCE_FILTERED, { type });
+  };
+
+
   const handleFeedback = (messageId, isPositive) => {
-    // Will implement later
-    console.log(`Feedback ${isPositive ? 'positive' : 'negative'} for message ${messageId}`);
+    trackEvent(ANALYTICS_EVENTS.FEEDBACK_GIVEN, {
+      is_positive: isPositive,
+      message_id: messageId
+    });
   };
 
   const handleSave = (messageId) => {
@@ -176,7 +191,7 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
 
       <MessageInput
         sourceType={sourceType}
-        setSourceType={setSourceType}
+        setSourceType={handleSourceTypeChange}  // Use the new handler
         input={input}
         setInput={setInput}
         isLoading={isLoading}

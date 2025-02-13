@@ -1,6 +1,7 @@
 // frontend/src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { trackEvent, ANALYTICS_EVENTS } from '../utils/analytics';
 
 const AuthContext = createContext(null);
 
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }) => {
             setIsProUser(true);
             setUser({ id: 'admin' });
             toast.success('Pro access granted!');
+            trackEvent(ANALYTICS_EVENTS.PRO_UPGRADED);
             return true;
         }
         return false;
