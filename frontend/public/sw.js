@@ -17,8 +17,9 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Skip Google Fonts requests as they're handled by the browser
-  if (event.request.url.includes('fonts.googleapis.com') || 
+  // Skip certain requests
+  if (event.request.url.includes('plausible.io') || 
+      event.request.url.includes('fonts.googleapis.com') || 
       event.request.url.includes('fonts.gstatic.com')) {
     return;
   }
@@ -30,13 +31,14 @@ self.addEventListener('fetch', event => {
         return response || fetch(event.request);
       })
       .catch(() => {
-        // If both cache and fetch fail, return a fallback
-        if (event.request.url.includes('fonts')) {
-          return new Response('', {
-            status: 404,
-            statusText: 'Not Found'
-          });
+        // If both cache and fetch fail, show offline page or fallback
+        if (event.request.mode === 'navigate') {
+          return caches.match('/index.html');
         }
+        return new Response('', {
+          status: 404,
+          statusText: 'Not Found'
+        });
       })
   );
 });
