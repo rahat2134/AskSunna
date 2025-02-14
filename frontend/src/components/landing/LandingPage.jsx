@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Book, Shield, Search, Database, Check } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NavHeader from './NavHeader';
+import HeroSection from './HeroSection';  // Add this import
 import { StatsSection, FAQSection, ContactSection } from './Sections';
 import ScrollToTop from '../ui/ScrollToTop';
 import { Toaster } from 'react-hot-toast';
@@ -43,8 +44,8 @@ const PricingTier = ({ name, price, features, popular, buttonText, buttonLink })
             <Link
                 to={buttonLink}
                 className={`mt-8 block w-full px-6 py-3 text-center text-sm font-semibold rounded-md ${popular
-                        ? 'bg-green-600 text-white hover:bg-green-700'
-                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600'
+                    ? 'bg-green-600 text-white hover:bg-green-700'
+                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600'
                     }`}
             >
                 {buttonText}
@@ -116,7 +117,7 @@ const LandingPage = () => {
             popular: true,
             features: [
                 "Unlimited questions | Custom collections",
-                "Priority response time",
+                "Access to Islamic Scholars",
                 "Advanced source filtering",
                 "Detailed explanations",
                 "Save favorite answers",
@@ -133,28 +134,8 @@ const LandingPage = () => {
             <Toaster position="top-center" />
 
             <div className="pt-16">
-                {/* Hero Section */}
-                <section className="relative py-20 bg-[url('/islamic-pattern.svg')] bg-repeat bg-opacity-5">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center">
-                            <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
-                                Islamic Knowledge,{' '}
-                                <span className="text-green-600 dark:text-green-500">Verified Sources</span>
-                            </h1>
-                            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 dark:text-gray-400 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-                                Get authentic answers from the Quran and Hadith with our AI-powered Islamic knowledge assistant.
-                            </p>
-                            <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-                                <Link
-                                    to={isProUser ? "/chat" : "/demo"}
-                                    className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 md:py-4 md:text-lg md:px-10"
-                                >
-                                    Try Now
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/* Replace the old hero section with the new HeroSection component */}
+                <HeroSection isProUser={isProUser} />
 
                 {/* Features Section */}
                 <section className="py-16 bg-white dark:bg-gray-800">

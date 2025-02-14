@@ -6,20 +6,20 @@ const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
 
     return (
         <div
-            className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} group`}
+            className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} group px-2 sm:px-0`}
             onMouseEnter={() => setShowActions(true)}
             onMouseLeave={() => setShowActions(false)}
         >
             {message.type === 'assistant' && (
-                <div className="flex-shrink-0 mr-4">
-                    <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
-                        <Book className="h-5 w-5 text-white" />
+                <div className="flex-shrink-0 mr-2 sm:mr-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-600 flex items-center justify-center">
+                        <Book className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                 </div>
             )}
 
-            <div className={`max-w-2xl rounded-lg p-4 ${message.type === 'user'
-                ? 'bg-green-600 text-white ml-12'
+            <div className={`max-w-[85%] sm:max-w-2xl rounded-lg p-3 sm:p-4 ${message.type === 'user'
+                ? 'bg-green-600 text-white ml-8 sm:ml-12'
                 : 'bg-white dark:bg-gray-800 shadow-lg dark:text-gray-200'
                 }`}>
                 {message.type === 'assistant' && (
@@ -36,18 +36,18 @@ const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
                 </div>
 
                 {message.sources && message.sources.length > 0 && (
-                    <div className="mt-4 space-y-3">
-                        <div className="text-sm font-medium text-green-700 dark:text-green-400 flex items-center">
-                            <Book className="h-4 w-4 mr-2" />
+                    <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3">
+                        <div className="text-xs sm:text-sm font-medium text-green-700 dark:text-green-400 flex items-center">
+                            <Book className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                             Verified Sources:
                         </div>
                         {message.sources.map((source, idx) => (
-                            <div key={idx} className="text-sm bg-green-50 dark:bg-gray-700/50 p-3 rounded border-l-4 border-green-500">
+                            <div key={idx} className="text-xs sm:text-sm bg-green-50 dark:bg-gray-700/50 p-2 sm:p-3 rounded border-l-4 border-green-500">
                                 <p className="font-medium text-gray-700 dark:text-gray-300">{source.source}</p>
                                 {source.translation ? (
                                     <>
-                                        <p className="mt-2 font-arabic text-right text-lg dark:text-gray-300">{source.text}</p>
-                                        <p className="mt-2 text-gray-600 dark:text-gray-400">{source.translation}</p>
+                                        <p className="mt-1 sm:mt-2 font-arabic text-right text-base sm:text-lg dark:text-gray-300">{source.text}</p>
+                                        <p className="mt-1 sm:mt-2 text-gray-600 dark:text-gray-400">{source.translation}</p>
                                     </>
                                 ) : (
                                     <p className="mt-1 text-gray-600 dark:text-gray-400">{source.text}</p>

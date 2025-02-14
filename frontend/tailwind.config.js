@@ -7,6 +7,10 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        'xs': '450px',
+        // ... other breakpoints
+      },
       backgroundImage: {
         'islamic-pattern': "url('/islamic-pattern.svg')",
       },
