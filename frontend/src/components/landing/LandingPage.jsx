@@ -8,7 +8,7 @@ import { StatsSection, FAQSection, ContactSection } from './Sections';
 import ScrollToTop from '../ui/ScrollToTop';
 import { Toaster } from 'react-hot-toast';
 import NewsletterSection from './NewsletterSection';
-import LoadingOverlay from '../ui/LoadingOverlay';
+import TestimonialSection from './TestimonialSection';
 
 const Feature = ({ icon: Icon, title, description }) => (
     <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
@@ -177,6 +177,9 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </section>
+
+                <StatsSection />
+                <TestimonialSection />  {/* Add this line */}
 
                 {/* FAQ Section */}
                 <FAQSection />
