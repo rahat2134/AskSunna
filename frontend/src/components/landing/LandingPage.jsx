@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Book, Shield, Search, Database, Check } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NavHeader from './NavHeader';
-import HeroSection from './HeroSection';  // Add this import
+import HeroSection from './HeroSection';
 import { StatsSection, FAQSection, ContactSection } from './Sections';
 import ScrollToTop from '../ui/ScrollToTop';
 import { Toaster } from 'react-hot-toast';

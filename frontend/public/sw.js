@@ -17,7 +17,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Skip certain requests
+
   if (event.request.url.includes('plausible.io') || 
       event.request.url.includes('fonts.googleapis.com') || 
       event.request.url.includes('fonts.gstatic.com')) {

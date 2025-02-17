@@ -1,4 +1,3 @@
-// frontend/src/components/landing/NewsletterSection.jsx
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import { toast } from 'react-hot-toast';

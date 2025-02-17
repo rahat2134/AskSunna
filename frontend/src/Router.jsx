@@ -5,6 +5,7 @@ import SimpleChat from './components/SimpleChat';
 import LandingPage from './components/landing/LandingPage';
 import { useAuth } from './context/AuthContext';
 import ScholarSection from './components/ScholarSection';
+import { Layout } from 'lucide-react';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {

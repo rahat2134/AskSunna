@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom';
 const HeroSection = ({ isProUser }) => {
     const [activeImage, setActiveImage] = useState(0);
     const images = [
-        '/assets/Islamic-scholar.jpg',
-        '/assets/Islamic-scholar-2.jpg',
-        '/assets/Islamic-scholar-3.jpg',
-        '/assets/Islamic-scholar-4.jpg',
-        '/assets/Islamic-scholar-5.jpg',
-        '/assets/Islamic-scholar-6.jpg',
-        '/assets/Islamic-scholar-7.jpg'
+        '/assets/Banner-1.jpg',
+        '/assets/Banner-2.jpg',
+        '/assets/Banner-3.jpg',
+        '/assets/Banner-4.jpg',
+        '/assets/Banner-5.jpg',
+        '/assets/Banner-6.jpg',
+        '/assets/Banner-7.jpg'
     ];
 
     useEffect(() => {
         const timer = setInterval(() => {
             setActiveImage((prev) => (prev + 1) % images.length);
-        }, 5000); // Switch every 5 seconds
+        }, 5000);
 
         return () => clearInterval(timer);
     }, [images.length]);

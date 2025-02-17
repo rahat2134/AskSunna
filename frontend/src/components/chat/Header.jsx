@@ -1,4 +1,3 @@
-// frontend/src/components/chat/Header.jsx
 import React, { useState } from 'react';
 import { Book, Sun, Moon, Crown, ChevronDown, Download, UserCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';

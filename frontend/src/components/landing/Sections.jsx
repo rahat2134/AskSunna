@@ -1,4 +1,3 @@
-// frontend/src/components/landing/Sections.jsx
 import React from 'react';
 import { MessageCircle, Users, Book, Clock } from 'lucide-react';
 

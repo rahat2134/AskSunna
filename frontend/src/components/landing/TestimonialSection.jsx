@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Star, ArrowLeft, ArrowRight, Quote, Check } from 'lucide-react';
 
 const testimonials = [
-    // Students
     {
       id: 1,
       name: "Sarah Ahmad",
@@ -23,8 +22,6 @@ const testimonials = [
       location: "Canada",
       highlightText: "Quick Reference"
     },
-  
-    // Doctors
     {
       id: 3,
       name: "Dr. Omar Hassan",
@@ -66,8 +63,6 @@ const testimonials = [
       location: "Malaysia",
       highlightText: "Structured Knowledge"
     },
-  
-    // Professors
     {
       id: 8,
       name: "Prof. Abdullah Rahman",
@@ -88,8 +83,6 @@ const testimonials = [
       location: "UK",
       highlightText: "Research Aid"
     },
-  
-    // Teachers
     {
       id: 10,
       name: "Aisha Mohammed",
@@ -199,8 +192,6 @@ const TestimonialCard = ({ testimonial }) => (
         });
       }
     };
-  
-    // Update active index on scroll
     const handleScroll = () => {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current;

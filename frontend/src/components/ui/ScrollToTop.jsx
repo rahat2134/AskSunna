@@ -1,4 +1,3 @@
-// frontend/src/components/ui/ScrollToTop.jsx
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 

@@ -1,4 +1,3 @@
-// frontend/src/components/ui/LoadingOverlay.jsx
 import React from 'react';
 
 const LoadingOverlay = () => (

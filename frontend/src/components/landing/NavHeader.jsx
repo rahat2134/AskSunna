@@ -1,4 +1,3 @@
-// frontend/src/components/landing/NavHeader.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Book, Moon, Sun, Menu, X } from 'lucide-react';
@@ -11,7 +10,7 @@ const NavHeader = ({ isDark, toggleDarkMode }) => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80; // Account for fixed header
+      const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 

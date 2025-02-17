@@ -191,7 +191,7 @@ I can help you understand: Teachings from the Quran and authentic Hadith, Islami
 
       <MessageInput
         sourceType={sourceType}
-        setSourceType={handleSourceTypeChange}  // Use the new handler
+        setSourceType={handleSourceTypeChange}
         input={input}
         setInput={setInput}
         isLoading={isLoading}
