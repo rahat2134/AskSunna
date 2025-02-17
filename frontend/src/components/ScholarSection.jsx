@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, Calendar, UserCircle, Clock, Star, Book, Globe, Check, Calendar as CalendarIcon } from 'lucide-react';
-import { format } from 'date-fns';
 import NavigationHeader from './chat/NavigationHeader';
+import { useAuth } from '../context/AuthContext';
+import ProAccessModal from './ui/ProAccessModal';
 
 
 // Scholar availability slots (simulated)
@@ -14,7 +15,29 @@ const generateTimeSlots = () => {
   return slots;
 };
 
-const Scholar = ({ scholar, onSelect }) => {
+const Scholar = ({ scholar, onSelect, onUpgradeClick }) => {
+  const { isProUser } = useAuth();
+
+  const handleAction = (action) => {
+    if (!isProUser) {
+      onUpgradeClick();
+      return;
+    }
+    if (action === 'book') {
+      onSelect(scholar);
+    } else {
+      alert('This page is under construction!');
+    }
+  };
+
+  const handleSlotClick = (slot) => {
+    if (!isProUser) {
+      onUpgradeClick();
+      return;
+    }
+    onSelect(scholar, slot);
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700">
       <div className="p-4 sm:p-6">
@@ -92,7 +115,7 @@ const Scholar = ({ scholar, onSelect }) => {
             {scholar.nextSlots.slice(0, 6).map((slot, index) => (
               <button
                 key={index}
-                onClick={() => onSelect(scholar, slot)}
+                onClick={() => handleSlotClick(slot)}
                 className="px-2 py-1 text-xs rounded-lg bg-green-50 hover:bg-green-100 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-700 dark:text-green-300"
               >
                 {slot}
@@ -104,13 +127,13 @@ const Scholar = ({ scholar, onSelect }) => {
         {/* Action Buttons */}
         <div className="mt-4 flex flex-col xs:flex-row gap-2">
           <button
-            onClick={() => onSelect(scholar)}
+            onClick={() => handleAction('book')}
             className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium"
           >
             Book Consultation
           </button>
           <button
-            onClick={() => alert('This page is under construction!')}
+            onClick={() => handleAction('view')}
             className="px-4 py-2 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg text-sm font-medium"
           >
             View Profile
@@ -195,6 +218,12 @@ const ScholarSection = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const { isProUser, verifyProAccess } = useAuth();
+  const [showProModal, setShowProModal] = useState(false);
+
+  const handleUpgradeClick = () => {
+    setShowProModal(true);
+  };
 
   useEffect(() => {
     // Simulated scholar data - replace with API call
@@ -371,6 +400,14 @@ const ScholarSection = () => {
     setSelectedSlot(null);
   };
 
+  const handleProAccess = (key) => {
+    const isVerified = verifyProAccess(key);
+    if (isVerified) {
+      setShowProModal(false);
+    }
+    return isVerified;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -402,6 +439,16 @@ const ScholarSection = () => {
           </div>
         </div>
 
+        {/* Pro Mode Banner - Add this */}
+        {!isProUser && (
+          <div className="mb-6 px-4 py-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-900/50">
+            <p className="text-sm text-yellow-800 dark:text-yellow-200 flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              You're in free mode. Upgrade to Pro to book consultations with scholars.
+            </p>
+          </div>
+        )}
+
         {/* Results Summary */}
         <div className="mb-4 px-1 text-sm font-medium text-gray-600 dark:text-gray-400">
           {filter === 'all'
@@ -416,6 +463,7 @@ const ScholarSection = () => {
               key={scholar.id}
               scholar={scholar}
               onSelect={handleSelect}
+              onUpgradeClick={handleUpgradeClick}
             />
           ))}
         </div>
@@ -432,6 +480,13 @@ const ScholarSection = () => {
             onConfirm={handleBooking}
           />
         )}
+
+        {/* Pro Access Modal - Add this */}
+        <ProAccessModal
+          isOpen={showProModal}
+          onClose={() => setShowProModal(false)}
+          onVerify={handleProAccess}
+        />
       </div>
     </div>
   );

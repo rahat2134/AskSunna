@@ -28,11 +28,7 @@ const Router = () => {
         </ProtectedRoute>
       } />
       <Route path="/demo" element={<SimpleChat />} />
-      <Route path="/scholars" element={
-        <ProtectedRoute>
-          <ScholarSection />
-        </ProtectedRoute>
-      } />
+      <Route path="/scholars" element={<ScholarSection />} />
     </Routes>
   );
 };

@@ -22,6 +22,26 @@ const NavHeader = ({ isDark, toggleDarkMode }) => {
     setIsMenuOpen(false);
   };
 
+  const PremiumLink = ({ children }) => (
+    <div className="relative group">
+      {children}
+      <span className="absolute -top-3 -right-3 px-1.5 py-0.5 text-[10px] font-medium bg-gradient-to-r from-yellow-500 to-amber-500 text-white rounded-full">
+        PRO
+      </span>
+    </div>
+  );
+
+  const NotificationDot = () => (
+    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500">
+        <span className="absolute whitespace-nowrap text-[10px] font-medium text-white bg-green-600 px-2 py-0.5 rounded-full -right-1 top-4 transform translate-x-full">
+          Talk to Scholars
+        </span>
+      </span>
+    </span>
+  );
+
   return (
     <header className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-800">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16">
@@ -38,29 +58,30 @@ const NavHeader = ({ isDark, toggleDarkMode }) => {
             <button onClick={() => scrollToSection('features')} className="text-gray-600 dark:text-gray-300 hover:text-green-600">Features</button>
             <button onClick={() => scrollToSection('pricing')} className="text-gray-600 dark:text-gray-300 hover:text-green-600">Pricing</button>
             <button onClick={() => scrollToSection('faq')} className="text-gray-600 dark:text-gray-300 hover:text-green-600">FAQ</button>
+            <PremiumLink>
+              <Link to="/scholars" className="text-gray-600 dark:text-gray-300 hover:text-green-600 font-medium">
+                Talk to Scholars
+              </Link>
+            </PremiumLink>
             <button onClick={() => scrollToSection('contact')} className="text-gray-600 dark:text-gray-300 hover:text-green-600">Contact</button>
-            
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </button>
-            
-            <Link
-              to={isProUser ? "/chat" : "/demo"}
-              className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              Try Now
-            </Link>
+            <div className="flex items-center justify-between py-2">
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
+            </div>
+
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 relative"
             >
+              {!isMenuOpen && <NotificationDot />}
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
@@ -73,6 +94,12 @@ const NavHeader = ({ isDark, toggleDarkMode }) => {
               <button onClick={() => scrollToSection('features')} className="block w-full text-left py-2 text-gray-600 dark:text-gray-300 hover:text-green-600">Features</button>
               <button onClick={() => scrollToSection('pricing')} className="block w-full text-left py-2 text-gray-600 dark:text-gray-300 hover:text-green-600">Pricing</button>
               <button onClick={() => scrollToSection('faq')} className="block w-full text-left py-2 text-gray-600 dark:text-gray-300 hover:text-green-600">FAQ</button>
+              <Link to="/scholars" className="block w-full text-left py-2 text-gray-600 dark:text-gray-300 hover:text-green-600 font-medium">
+                Talk to Scholars
+                <span className="ml-2 inline-block px-1.5 py-0.5 text-[10px] font-medium bg-gradient-to-r from-yellow-500 to-amber-500 text-white rounded-full">
+                  PRO
+                </span>
+              </Link>
               <button onClick={() => scrollToSection('contact')} className="block w-full text-left py-2 text-gray-600 dark:text-gray-300 hover:text-green-600">Contact</button>
               <div className="flex items-center justify-between py-2">
                 <button
