@@ -14,21 +14,28 @@
     />
 
     <!-- Add Google Fonts preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Amiri&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Amiri&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- PWA meta tags -->
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
 
-    <!-- Add CSP meta tag -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io; connect-src 'self' https://plausible.io https://generativelanguage.googleapis.com https://*.ingest.sentry.io https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https://*; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com">
+    <!-- Replace the current CSP meta tag with: -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io data:; connect-src 'self' https://plausible.io https://generativelanguage.googleapis.com https://*.ingest.sentry.io https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https://*; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+    />
 
     <title>AskSunnah - Verified Answers</title>
     <script>
@@ -64,10 +71,13 @@
         };
     </script>
     <script
+      async
       defer
       data-domain="asksunnah.netlify.app"
       src="https://plausible.io/js/script.tagged-events.js"
     ></script>
+    <!-- Note: If you see plausible.io being blocked, this is normal with ad blockers -->
+    <link rel="modulepreload" href="/src/main.jsx" />
   </head>
   <body>
     <div id="root"></div>
