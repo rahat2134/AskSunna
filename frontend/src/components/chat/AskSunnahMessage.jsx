@@ -1,6 +1,34 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Loader2, Book, MessageCircle, Clock, ThumbsUp, ThumbsDown, Share2, Save } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
+const ScholarSuggestion = () => (
+    <div className="mt-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-3">
+        <Link
+            to="/scholars"
+            className="inline-flex items-center text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+        >
+            Talk to a Scholar
+            <svg
+                className="ml-1 w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                />
+            </svg>
+        </Link>
+        {" "}
+        for personalized guidance and in-depth discussion.
+    </div>
+);
+
+// Main component
 const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
     const [showActions, setShowActions] = useState(false);
 
@@ -54,6 +82,13 @@ const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
                                 )}
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {/* Refer to ask from scholar section */}
+                {message.type === 'assistant' && (
+                    <div className="mt-4">
+                        <ScholarSuggestion />
                     </div>
                 )}
 
