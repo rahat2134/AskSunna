@@ -89,7 +89,7 @@ const QiblaCompass = () => {
                     <svg className="w-full h-full" viewBox="0 0 100 100">
                         <defs>
                             <radialGradient id="qiblaGradient" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stopColor="rgb(34 197 94 / 0.2)" />
+                                <stop offset="0%" stopColor="rgb(34 197 94 / 0.5)" />
                                 <stop offset="100%" stopColor="rgb(34 197 94 / 0)" />
                             </radialGradient>
                         </defs>
