@@ -84,6 +84,23 @@ const QiblaCompass = () => {
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
             {/* Compass Container */}
             <div className="relative w-64 h-64 mx-auto mb-6">
+                {/* Qibla Sector Indicator */}
+                <div className="absolute inset-0">
+                    <svg className="w-full h-full" viewBox="0 0 100 100">
+                        <defs>
+                            <radialGradient id="qiblaGradient" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stopColor="rgb(34 197 94 / 0.2)" />
+                                <stop offset="100%" stopColor="rgb(34 197 94 / 0)" />
+                            </radialGradient>
+                        </defs>
+                        <path
+                            d="M50,50 L50,0 A50,50 0 0,1 85,15 Z"
+                            fill="url(#qiblaGradient)"
+                            className="dark:opacity-30"
+                        />
+                    </svg>
+                </div>
+
                 {/* Outer Circle with Degree Markers */}
                 <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-700">
                     {/* Degree markers */}
@@ -142,7 +159,8 @@ const QiblaCompass = () => {
                     <ol className="space-y-2 text-sm text-green-700 dark:text-green-300">
                         <li>1. Hold your device flat</li>
                         <li>2. Point the green arrow towards Qibla</li>
-                        <li>3. The arrow points to the Qaba in Makkah</li>
+                        <li>3. Look for the green highlighted sector (generally between North and East)</li>
+                        <li>4. The arrow points to the Qaba in Makkah</li>
                     </ol>
                 </div>
 
