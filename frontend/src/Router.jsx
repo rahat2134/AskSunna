@@ -5,6 +5,7 @@ import SimpleChat from './components/SimpleChat';
 import LandingPage from './components/landing/LandingPage';
 import { useAuth } from './context/AuthContext';
 import ScholarSection from './components/ScholarSection';
+import QiblaPage from './components/QiblaPage';
 import { Layout } from 'lucide-react';
 
 // Protected route wrapper
@@ -29,6 +30,7 @@ const Router = () => {
       } />
       <Route path="/demo" element={<SimpleChat />} />
       <Route path="/scholars" element={<ScholarSection />} />
+      <Route path="/qibla" element={<QiblaPage />} />
     </Routes>
   );
 };

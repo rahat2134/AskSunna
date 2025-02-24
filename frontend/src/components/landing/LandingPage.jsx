@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Shield, Search, Database, Check } from 'lucide-react';
+import { Book, Shield, Search, Database, Check, Compass } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NavHeader from './NavHeader';
 import HeroSection from './HeroSection';
@@ -95,6 +95,11 @@ const LandingPage = () => {
             icon: Database,
             title: "Extensive Database",
             description: "Access to a growing collection of Quran verses and authentic Hadiths"
+        },
+        {
+            icon: Compass,
+            title: "Qibla Direction",
+            description: "Find the direction of the Qibla from anywhere using your device's compass"
         }
     ];
 
@@ -106,7 +111,8 @@ const LandingPage = () => {
                 "Basic Islamic Q&A",
                 "Limited daily questions",
                 "Access to common queries",
-                "Basic source verification"
+                "Basic source verification",
+                "Qibla Direction"
             ],
             buttonText: "Start Free",
             buttonLink: "/demo"
@@ -138,7 +144,7 @@ const LandingPage = () => {
                 <HeroSection isProUser={isProUser} />
 
                 {/* Features Section */}
-                <section className="py-16 bg-white dark:bg-gray-800">
+                <section id="features" className="py-16 bg-white dark:bg-gray-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center">
                             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
