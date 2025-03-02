@@ -1,6 +1,13 @@
+/**
+ * @fileoverview Main landing page component for AskSunnah application.
+ * Assembles marketing sections including hero, features, pricing, testimonials,
+ * FAQ, newsletter signup and contact form. Implements dark/light theme and
+ * provides navigation with conditional links based on user authentication status.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Shield, Search, Database, Check, Compass } from 'lucide-react';
+import { Shield, Search, Database, Check, Compass } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NavHeader from './NavHeader';
 import HeroSection from './HeroSection';
@@ -140,7 +147,6 @@ const LandingPage = () => {
             <Toaster position="top-center" />
 
             <div className="pt-16">
-                {/* Replace the old hero section with the new HeroSection component */}
                 <HeroSection isProUser={isProUser} />
 
                 {/* Features Section */}
@@ -185,14 +191,9 @@ const LandingPage = () => {
                 </section>
 
                 <StatsSection />
-                <TestimonialSection />  {/* Add this line */}
-
-                {/* FAQ Section */}
+                <TestimonialSection />
                 <FAQSection />
-
                 <NewsletterSection />
-
-                {/* Contact Section */}
                 <ContactSection />
 
                 {/* Footer */}

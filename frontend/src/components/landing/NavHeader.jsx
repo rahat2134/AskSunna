@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Navigation header component for AskSunnah landing page.
+ * Provides responsive navigation with mobile menu toggle, section links,
+ * tools dropdown, theme switching, and conditional pro feature access.
+ * Includes smooth scroll functionality and visual indicators for premium features.
+ */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Book, Moon, Sun, Menu, X, ChevronDown, Compass, Sparkles } from 'lucide-react';

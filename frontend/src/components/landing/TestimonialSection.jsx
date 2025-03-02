@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Testimonial carousel section for AskSunnah landing page.
+ * Features horizontally scrollable testimonial cards from diverse users
+ * with responsive navigation controls, visual indicators, and smooth scrolling.
+ * Includes professional profile images, ratings, and highlights of how
+ * different user segments benefit from the platform.
+ */
 import React, { useRef, useEffect, useState } from 'react';
 import { Star, ArrowLeft, ArrowRight, Quote, Check } from 'lucide-react';
 

@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Modal component for verifying Pro access status.
+ * Allows users to enter access keys to unlock premium features.
+ * 
+ * Includes promotional information with Instagram follow links,
+ * form validation for key submission, and error handling for
+ * invalid keys.
+ */
 import React, { useState } from 'react';
 import { X, Instagram, Key } from 'lucide-react';
 

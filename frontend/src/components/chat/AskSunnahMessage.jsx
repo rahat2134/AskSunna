@@ -1,5 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Loader2, Book, MessageCircle, Clock, ThumbsUp, ThumbsDown, Share2, Save } from 'lucide-react';
+/**
+ * @fileoverview Chat message component for AskSunnah application that displays
+ * both user and AI assistant messages with appropriate styling.
+ * 
+ * Renders different UI elements based on message type:
+ * - User messages: Right-aligned with green background
+ * - Assistant messages: Left-aligned with light/dark mode compatible styling
+ * 
+ * Features include:
+ * - Message metadata (sender info and timestamp)
+ * - "Talk to a Scholar" suggestion link
+ * - Hover-activated action buttons (feedback, save, share)
+ * - Support for displaying referenced sources (currently unused)
+ * - Responsive design optimized for mobile and desktop
+ */
+
+import React, { useState } from 'react';
+import { Book, MessageCircle, Clock, ThumbsUp, ThumbsDown, Share2, Save } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ScholarSuggestion = () => (
@@ -63,6 +79,7 @@ const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
                     <p className="whitespace-pre-wrap">{message.content}</p>
                 </div>
 
+                {/* ToDo- This part is not used anywhere in current version. */}
                 {message.sources && message.sources.length > 0 && (
                     <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3">
                         <div className="text-xs sm:text-sm font-medium text-green-700 dark:text-green-400 flex items-center">
@@ -84,6 +101,7 @@ const AskSunnahMessage = ({ message, onFeedback, onSave, onShare }) => {
                         ))}
                     </div>
                 )}
+                {/* -- Till here-- */}
 
                 {/* Refer to ask from scholar section */}
                 {message.type === 'assistant' && (

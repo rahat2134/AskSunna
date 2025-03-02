@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Hero section component for AskSunnah landing page.
+ */
 import React, { useState, useEffect } from 'react';
 import { Shield, Book } from 'lucide-react';
 import { Link } from 'react-router-dom';

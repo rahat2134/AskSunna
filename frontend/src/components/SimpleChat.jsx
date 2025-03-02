@@ -1,3 +1,18 @@
+/**
+ * @fileoverview Main chat interface component for AskSunnah
+ * 
+ * Provides a complete Islamic Q&A experience with:
+ * - Chat history management and message display
+ * - Source filtering (Quran, Hadith, etc.)
+ * - Dark/light theme support with persistence
+ * - Integration with both local database (Pro) and Gemini AI (Free)
+ * - Analytics tracking for user interactions
+ * - Message actions (feedback, save, share)
+ * - Export capabilities for chat transcripts
+ * 
+ * Handles initialization, UI state, API communication, and scroll management
+ * within a responsive interface designed for Islamic knowledge seeking.
+ */
 import React, { useState, useRef, useEffect } from 'react';
 import { Loader2, Check } from 'lucide-react';
 import { generateGeminiResponse } from '../utils/gemini';

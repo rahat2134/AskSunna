@@ -1,3 +1,13 @@
+/**
+ * @fileoverview Qibla direction compass functionality component.
+ * 
+ * Calculates direction to Mecca based on user's geolocation
+ * and provides a responsive compass interface with:
+ * - Real-time orientation via device sensors
+ * - Visual indicators for cardinal directions
+ * - Step-by-step usage instructions
+ * - Error handling for location/sensor permissions
+ */
 import React, { useState, useEffect } from 'react';
 import { Compass, MapPin, AlertCircle, Navigation } from 'lucide-react';
 

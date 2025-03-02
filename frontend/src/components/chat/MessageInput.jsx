@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Message input component for AskSunnah chat interface.
+ */
+
 import React from 'react';
 import { Send, Loader2 } from 'lucide-react';
 

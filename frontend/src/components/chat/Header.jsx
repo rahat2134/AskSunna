@@ -1,5 +1,18 @@
+/**
+ * @fileoverview Chat section header component for AskSunnah that manages navigation 
+ * and application controls.
+ * 
+ * Provides core interface elements:
+ * - Dark/light theme toggle
+ * - Mode switching between Free and Pro
+ * - User dropdown with contextual actions
+ * 
+ * Handles authentication state to conditionally render pro features
+ * and provides modal access for upgrading to Pro mode.
+ */
+
 import React, { useState } from 'react';
-import { Book, Sun, Moon, Crown, ChevronDown, Download, UserCircle, Compass } from 'lucide-react';
+import { Book, Sun, Moon, Crown, ChevronDown, Download, UserCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLocation } from 'react-router-dom';
 import ProAccessModal from '../ui/ProAccessModal';

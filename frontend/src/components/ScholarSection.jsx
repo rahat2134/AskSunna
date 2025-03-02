@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Scholar consultation booking section for AskSunnah.
+ * 
+ * Provides interface for browsing and booking Islamic scholar consultations with:
+ * - Scholar profiles with expertise, ratings, and availability
+ * - Consultation booking system with topic selection
+ */
 import React, { useState, useEffect } from 'react';
 import { Shield, Calendar, UserCircle, Clock, Star, Book, Globe, Check, Calendar as CalendarIcon } from 'lucide-react';
 import NavigationHeader from './chat/NavigationHeader';
@@ -439,7 +446,7 @@ const ScholarSection = () => {
           </div>
         </div>
 
-        {/* Pro Mode Banner - Add this */}
+        {/* Pro Mode Banner*/}
         {!isProUser && (
           <div className="mb-6 px-4 py-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-900/50">
             <p className="text-sm text-yellow-800 dark:text-yellow-200 flex items-center gap-2">

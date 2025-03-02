@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Newsletter subscription component with email capture form.
+ * Provides success feedback using toast notifications and loading state handling.
+ */
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import { toast } from 'react-hot-toast';

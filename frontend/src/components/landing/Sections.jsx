@@ -1,5 +1,9 @@
+/**
+ * @fileoverview Collection of landing page section components including:
+ * StatsSection with key metrics, FAQSection with common questions,
+ * and ContactSection with support information.
+ */
 import React from 'react';
-import { MessageCircle, Users, Book, Clock } from 'lucide-react';
 
 export const StatsSection = () => (
   <section className="py-16 bg-green-50 dark:bg-green-900/20">

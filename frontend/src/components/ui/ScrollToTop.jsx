@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Scroll to top functionality
+ */
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 

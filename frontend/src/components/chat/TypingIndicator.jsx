@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Shows a typing effect in responses of AskSunnah chat.
+ */
+
 import React from 'react';
 import { Book } from 'lucide-react';
 
