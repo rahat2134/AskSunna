@@ -6,15 +6,15 @@ const LocationDisplay = () => {
   const { location, isLocating, detectLocation } = useLocation();
 
   return (
-    <div className="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-200 dark:border-gray-700">
+    <div className="inline-flex flex-wrap justify-center items-center w-full sm:w-auto px-3 py-2 sm:px-4 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-200 dark:border-gray-700">
       {location ? (
         <>
           <MapPin className="h-4 w-4 text-green-600 mr-2" />
-          <span className="text-sm text-gray-700 dark:text-gray-300">
+          <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mr-2">
             {location.isDefault ? (
               <span className="flex items-center">
                 <span className="font-medium">Makkah</span>
-                <span className="ml-1 text-xs text-yellow-600">(Default)</span>
+                <span className="ml-1 text-[10px] sm:text-xs text-yellow-600">(Default)</span>
               </span>
             ) : (
               `${location.latitude.toFixed(2)}, ${location.longitude.toFixed(2)}`
@@ -24,7 +24,7 @@ const LocationDisplay = () => {
       ) : (
         <>
           <LocateOff className="h-4 w-4 text-yellow-600 mr-2" />
-          <span className="text-sm text-gray-700 dark:text-gray-300">
+          <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 mr-2">
             Location unavailable
           </span>
         </>
@@ -32,7 +32,7 @@ const LocationDisplay = () => {
       <button
         onClick={detectLocation}
         disabled={isLocating}
-        className="ml-3 p-1 text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-500"
+        className="p-1 text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-500"
         title="Update location"
       >
         {isLocating ? (

@@ -16,6 +16,8 @@ const RamadanTimesPage = () => {
     const [ramadanDates, setRamadanDates] = useState([]);
     const [selectedYear, setSelectedYear] = useState(2025);
     const [hijriYear, setHijriYear] = useState('1446');
+    const [calculationMethod, setCalculationMethod] = useState(3); // Default to Egyptian method
+
 
     // Update Hijri year when selected year changes
     useEffect(() => {
@@ -23,27 +25,27 @@ const RamadanTimesPage = () => {
     }, [selectedYear]);
 
     // Calculate Ramadan dates based on location
+    const fetchRamadanCalendar = async () => {
+        try {
+            setLoading(true);
+            const calendar = await getRamadanCalendar(
+                location.latitude,
+                location.longitude,
+                selectedYear,
+                calculationMethod // Pass the selected method
+            );
+            setRamadanDates(calendar);
+        } catch (err) {
+            console.error('Error fetching Ramadan calendar:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         if (!location) return;
-
-        const fetchRamadanCalendar = async () => {
-            try {
-                setLoading(true);
-                const calendar = await getRamadanCalendar(
-                    location.latitude,
-                    location.longitude,
-                    selectedYear
-                );
-                setRamadanDates(calendar);
-            } catch (err) {
-                console.error('Error fetching Ramadan calendar:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchRamadanCalendar();
-    }, [location, selectedYear]);
+    }, [location, selectedYear, calculationMethod]);
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -67,11 +69,11 @@ const RamadanTimesPage = () => {
 
             {/* Main Content */}
             <div className="max-w-4xl mx-auto px-4 py-8">
-                <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                <div className="text-center mb-6 sm:mb-8">
+                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">
                         Ramadan {hijriYear} Calendar
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
                         Suhoor (Sahar) and Iftar times for your location
                     </p>
 
@@ -80,43 +82,66 @@ const RamadanTimesPage = () => {
                 </div>
 
                 {error && (
-                    <div className="bg-yellow-50 dark:bg-yellow-900/30 rounded-lg p-4 mb-6">
-                        <div className="flex items-center gap-2 text-yellow-800 dark:text-yellow-200">
-                            <AlertCircle className="h-5 w-5 flex-shrink-0" />
-                            <p>{error}</p>
+                    <div className="bg-yellow-50 dark:bg-yellow-900/30 rounded-lg p-3 sm:p-4 mb-6">
+                        <div className="flex items-start sm:items-center gap-2 text-yellow-800 dark:text-yellow-200">
+                            <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5 sm:mt-0" />
+                            <div>
+                                <p>{error}</p>
+                                <p className="mt-1 text-sm text-yellow-700 dark:text-yellow-300">
+                                    We're showing estimated times. For accurate times, please check with your local mosque.
+                                </p>
+                            </div>
                         </div>
-                        <p className="mt-2 text-yellow-700 dark:text-yellow-300 pl-7">
-                            We're showing estimated times. For accurate times, please check with your local mosque.
-                        </p>
                     </div>
                 )}
 
                 {/* Calendar Header */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 mb-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                         <h2 className="text-lg font-medium text-gray-900 dark:text-white flex items-center">
                             <Calendar className="h-5 w-5 mr-2 text-green-600" />
                             Ramadan Calendar
                         </h2>
 
-                        <div className="flex items-center space-x-2">
-                            <button
-                                onClick={() => setSelectedYear(selectedYear - 1)}
-                                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                                aria-label="Previous year"
-                            >
-                                <ChevronLeft className="h-5 w-5" />
-                            </button>
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {selectedYear}
-                            </span>
-                            <button
-                                onClick={() => setSelectedYear(selectedYear + 1)}
-                                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                                aria-label="Next year"
-                            >
-                                <ChevronRight className="h-5 w-5" />
-                            </button>
+                        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                            {/* Year selector */}
+                            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-md p-1">
+                                <button
+                                    onClick={() => setSelectedYear(selectedYear - 1)}
+                                    className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300"
+                                    aria-label="Previous year"
+                                >
+                                    <ChevronLeft className="h-5 w-5" />
+                                </button>
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 px-2">
+                                    {selectedYear}
+                                </span>
+                                <button
+                                    onClick={() => setSelectedYear(selectedYear + 1)}
+                                    className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-600 dark:text-gray-300"
+                                    aria-label="Next year"
+                                >
+                                    <ChevronRight className="h-5 w-5" />
+                                </button>
+                            </div>
+
+                            {/* Method selector - Made more prominent */}
+                            <div className="w-full sm:w-auto">
+                                <select
+                                    value={calculationMethod}
+                                    onChange={(e) => setCalculationMethod(Number(e.target.value))}
+                                    className="w-full sm:w-auto text-sm rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white p-2"
+                                    aria-label="Calculation method"
+                                >
+                                    <option value="1">Muslim World League</option>
+                                    <option value="2">ISNA North America</option>
+                                    <option value="3">Egyptian Authority</option>
+                                    <option value="4">Umm Al-Qura, Makkah</option>
+                                    <option value="5">Univ. Islamic Sciences</option>
+                                    <option value="8">Gulf Region</option>
+                                    <option value="12">Dubai Standard</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +153,7 @@ const RamadanTimesPage = () => {
                 />
 
                 {/* Ramadan Information Box */}
-                <RamadanInfoBox />
+                <RamadanInfoBox calculationMethod={calculationMethod} />
 
                 {/* Disclaimer */}
                 <RamadanDisclaimer error={error} />
