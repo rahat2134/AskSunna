@@ -54,16 +54,16 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ 
-            isProUser, 
-            user, 
-            login, 
+        <AuthContext.Provider value={{
+            isProUser,
+            user,
+            login,
             logout,
             upgradeToPro,
             verifyProAccess
-          }}>
+        }}>
             {children}
-          </AuthContext.Provider>
+        </AuthContext.Provider>
     );
 };
 

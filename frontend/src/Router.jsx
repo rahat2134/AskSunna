@@ -6,7 +6,7 @@ import LandingPage from './components/landing/LandingPage';
 import { useAuth } from './context/AuthContext';
 import ScholarSection from './components/ScholarSection';
 import QiblaPage from './components/QiblaPage';
-import { Layout } from 'lucide-react';
+import RamadanTimesPage from './components/RamadanTimesPage';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -31,6 +31,7 @@ const Router = () => {
       <Route path="/demo" element={<SimpleChat />} />
       <Route path="/scholars" element={<ScholarSection />} />
       <Route path="/qibla" element={<QiblaPage />} />
+      <Route path="/ramadan" element={<RamadanTimesPage />} />
     </Routes>
   );
 };

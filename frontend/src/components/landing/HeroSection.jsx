@@ -2,7 +2,7 @@
  * @fileoverview Hero section component for AskSunnah landing page.
  */
 import React, { useState, useEffect } from 'react';
-import { Shield, Book } from 'lucide-react';
+import { Shield, Book, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const HeroSection = ({ isProUser }) => {
@@ -72,8 +72,8 @@ const HeroSection = ({ isProUser }) => {
                                         key={index}
                                         onClick={() => setActiveImage(index)}
                                         className={`w-2 h-2 rounded-full transition-colors ${activeImage === index
-                                                ? 'bg-green-600'
-                                                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                                            ? 'bg-green-600'
+                                            : 'bg-white bg-opacity-50 hover:bg-opacity-75'
                                             }`}
                                     />
                                 ))}
@@ -89,6 +89,25 @@ const HeroSection = ({ isProUser }) => {
                                     <div className="flex items-center">
                                         <Book className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 mr-1 sm:mr-2" />
                                         <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">Direct Consultation</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 sm:p-4 w-[90%] sm:w-full max-w-md z-20">
+                                <div className="flex items-center justify-center space-x-4 sm:space-x-8">
+                                    <div className="flex items-center">
+                                        <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 mr-1 sm:mr-2" />
+                                        <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">Verified Scholars</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <Book className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 mr-1 sm:mr-2" />
+                                        <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">Direct Consultation</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 mr-1 sm:mr-2" />
+                                        <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
+                                            Ramadan Calendar
+                                            <span className="ml-1 text-[8px] sm:text-[10px] px-1 py-0.5 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full">NEW</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

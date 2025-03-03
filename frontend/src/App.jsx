@@ -2,7 +2,9 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { LocationProvider } from './context/LocationContext';
 import Router from './Router';
+import RamadanButton from './components/ui/RamadanButton';
 
 function LoadingScreen() {
   return (
@@ -13,12 +15,19 @@ function LoadingScreen() {
 }
 
 function App() {
+  // Only show the Ramadan button during certain months (Feb-April for testing)
+  const currentMonth = new Date().getMonth();
+  const showRamadanButton = currentMonth >= 1 && currentMonth <= 3; // Feb-Apr
+
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Suspense fallback={<LoadingScreen />}>
-          <Router />
-        </Suspense>
+        <LocationProvider>
+          <Suspense fallback={<LoadingScreen />}>
+            <Router />
+            {showRamadanButton && <RamadanButton />}
+          </Suspense>
+        </LocationProvider>
       </AuthProvider>
     </BrowserRouter>
   );

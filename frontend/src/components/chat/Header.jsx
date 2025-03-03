@@ -89,6 +89,14 @@ const Header = ({ isDark, toggleDarkMode, isProMode, setIsProMode, onExport }) =
                                                     <UserCircle className="h-4 w-4" />
                                                     Talk to Scholars
                                                 </Link>
+                                                <Link
+                                                    to="/ramadan"
+                                                    onClick={() => setShowDropdown(false)}
+                                                    className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2"
+                                                >
+                                                    <Calendar className="h-4 w-4" />
+                                                    Ramadan Calendar
+                                                </Link>
                                                 <button
                                                     onClick={() => {
                                                         onExport('pdf');
