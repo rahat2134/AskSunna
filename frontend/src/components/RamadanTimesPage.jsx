@@ -17,7 +17,7 @@ const RamadanTimesPage = () => {
     const [selectedYear, setSelectedYear] = useState(2025);
     const [hijriYear, setHijriYear] = useState('1446');
     const [calculationMethod, setCalculationMethod] = useState(3); // Default to Egyptian method
-
+    const [usingAPI, setUsingAPI] = useState(true);
 
     // Update Hijri year when selected year changes
     useEffect(() => {
@@ -28,15 +28,17 @@ const RamadanTimesPage = () => {
     const fetchRamadanCalendar = async () => {
         try {
             setLoading(true);
+            setUsingAPI(true);
             const calendar = await getRamadanCalendar(
                 location.latitude,
                 location.longitude,
                 selectedYear,
-                calculationMethod // Pass the selected method
+                calculationMethod
             );
             setRamadanDates(calendar);
         } catch (err) {
             console.error('Error fetching Ramadan calendar:', err);
+            setUsingAPI(false);
         } finally {
             setLoading(false);
         }
@@ -156,7 +158,7 @@ const RamadanTimesPage = () => {
                 <RamadanInfoBox calculationMethod={calculationMethod} />
 
                 {/* Disclaimer */}
-                <RamadanDisclaimer error={error} />
+                <RamadanDisclaimer error={error} usingAPI={usingAPI} />
             </div>
         </div>
     );
