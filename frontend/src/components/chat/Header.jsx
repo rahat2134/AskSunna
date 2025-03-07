@@ -12,7 +12,7 @@
  */
 
 import React, { useState } from 'react';
-import { Book, Sun, Moon, Crown, ChevronDown, Download, UserCircle } from 'lucide-react';
+import { Book, Sun, Moon, Crown, ChevronDown, Download, UserCircle, Calendar } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLocation } from 'react-router-dom';
 import ProAccessModal from '../ui/ProAccessModal';
