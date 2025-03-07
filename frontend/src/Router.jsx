@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import SimpleChat from './components/SimpleChat';
 import LandingPage from './components/landing/LandingPage';
 import { useAuth } from './context/AuthContext';
-import ScholarSection from './components/ScholarSection';
+import { ScholarSection } from './components/scholars';
 import QiblaPage from './components/QiblaPage';
 import RamadanTimesPage from './components/RamadanTimesPage';
 

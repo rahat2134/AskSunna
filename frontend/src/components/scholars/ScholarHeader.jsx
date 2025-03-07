@@ -1,10 +1,26 @@
+/**
+ * @fileoverview Header component for the scholar consultation section with
+ * banner slideshow, navigation controls, and filter options. Features 
+ * responsive design with auto-rotating image carousel, category filtering,
+ * and navigation back to the main app.
+ */
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const NavigationHeader = ({ title, currentFilter, onFilterChange }) => {
+const ScholarHeader = ({ title, currentFilter, onFilterChange }) => {
     const navigate = useNavigate();
     const [activeImage, setActiveImage] = useState(0);
+
+    // Available filters
+    const filters = [
+        { id: 'all', label: 'All Scholars' },
+        { id: 'online', label: 'Online Now' },
+        { id: 'hadith', label: 'Hadith Studies' },
+        { id: 'fiqh', label: 'Fiqh/Jurisprudence' },
+        { id: 'finance', label: 'Islamic Finance' },
+        { id: 'quran', label: 'Quran Studies' }
+    ];
 
     const images = [
         '/assets/Banner-1.jpg',
@@ -86,16 +102,16 @@ const NavigationHeader = ({ title, currentFilter, onFilterChange }) => {
             <div className="max-w-5xl mx-auto px-4 -mt-8 relative z-20">
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4">
                     <div className="flex flex-wrap gap-2">
-                        {["all", "online", "hadith", "fiqh", "finance"].map((filterType) => (
+                        {filters.map((filter) => (
                             <button
-                                key={filterType}
-                                onClick={() => onFilterChange(filterType)}
-                                className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${currentFilter === filterType
+                                key={filter.id}
+                                onClick={() => onFilterChange(filter.id)}
+                                className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${currentFilter === filter.id
                                     ? "bg-green-600 text-white shadow-sm"
                                     : "bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600"
                                     }`}
                             >
-                                {filterType.charAt(0).toUpperCase() + filterType.slice(1)}
+                                {filter.label}
                             </button>
                         ))}
                     </div>
@@ -105,4 +121,4 @@ const NavigationHeader = ({ title, currentFilter, onFilterChange }) => {
     );
 };
 
-export default NavigationHeader;
+export default ScholarHeader;
