@@ -121,9 +121,10 @@ const ScholarCard = ({ scholar, onSelect, onUpgradeClick }) => {
                 <div className="mt-4 flex flex-col xs:flex-row gap-2">
                     <button
                         onClick={() => handleAction('book')}
-                        className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium"
+                        className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium flex items-center justify-center"
                     >
-                        Book Consultation
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Book Live Consultation
                     </button>
                     <button
                         onClick={() => handleAction('view')}
