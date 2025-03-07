@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Calendar, AlertCircle, ChevronLeft, ChevronRight, CalendarIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { getRamadanCalendar } from '../utils/prayerTimes';
-import { getHijriYear, getRamadanStartDate } from '../utils/ramadanUtils';
 import { useLocation } from '../context/LocationContext';
 import LocationDisplay from './ui/LocationDisplay';
 import RamadanTable from './ramadan/RamadanTable';
 import RamadanInfoBox from './ramadan/RamadanInfoBox';
 import RamadanDisclaimer from './ramadan/RamadanDisclaimer';
+import {
+    getRamadanCalendarWithFallback,
+    getMethodName
+} from '../services/prayerTimesAPI';
 
 const RamadanTimesPage = () => {
     const navigate = useNavigate();
@@ -16,19 +18,37 @@ const RamadanTimesPage = () => {
     const [ramadanDates, setRamadanDates] = useState([]);
     const [selectedYear, setSelectedYear] = useState(2025);
     const [hijriYear, setHijriYear] = useState('1446');
-    const [calculationMethod, setCalculationMethod] = useState(3); // Default to Egyptian method
-
+    const [calculationMethod, setCalculationMethod] = useState(3); // Default to Muslim World League
+    const [methodName, setMethodName] = useState('Muslim World League');
 
     // Update Hijri year when selected year changes
     useEffect(() => {
-        setHijriYear(getHijriYear(selectedYear));
+        // Approximate mapping for next few years
+        const hijriYears = {
+            2024: '1445',
+            2025: '1446',
+            2026: '1447',
+            2027: '1448',
+            2028: '1449',
+            2029: '1450',
+            2030: '1451'
+        };
+
+        setHijriYear(hijriYears[selectedYear] || String(parseInt(selectedYear) - 579));
     }, [selectedYear]);
+
+    // Update method name when calculation method changes
+    useEffect(() => {
+        setMethodName(getMethodName(calculationMethod));
+    }, [calculationMethod]);
 
     // Calculate Ramadan dates based on location
     const fetchRamadanCalendar = async () => {
+        if (!location) return;
+
         try {
             setLoading(true);
-            const calendar = await getRamadanCalendar(
+            const calendar = await getRamadanCalendarWithFallback(
                 location.latitude,
                 location.longitude,
                 selectedYear,
@@ -133,13 +153,15 @@ const RamadanTimesPage = () => {
                                     className="w-full sm:w-auto text-sm rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white p-2"
                                     aria-label="Calculation method"
                                 >
-                                    <option value="1">Muslim World League</option>
-                                    <option value="2">ISNA North America</option>
-                                    <option value="3">Egyptian Authority</option>
+                                    <option value="1">University of Islamic Sciences, Karachi</option>
+                                    <option value="2">Islamic Society of North America (ISNA)</option>
+                                    <option value="3">Muslim World League</option>
                                     <option value="4">Umm Al-Qura, Makkah</option>
-                                    <option value="5">Univ. Islamic Sciences</option>
+                                    <option value="5">Egyptian General Authority</option>
                                     <option value="8">Gulf Region</option>
-                                    <option value="12">Dubai Standard</option>
+                                    <option value="12">Union Organization islamic de France</option>
+                                    <option value="13">Diyanet İşleri Başkanlığı, Turkey</option>
+                                    <option value="16">Dubai Standard</option>
                                 </select>
                             </div>
                         </div>
@@ -153,7 +175,7 @@ const RamadanTimesPage = () => {
                 />
 
                 {/* Ramadan Information Box */}
-                <RamadanInfoBox calculationMethod={calculationMethod} />
+                <RamadanInfoBox calculationMethod={methodName} />
 
                 {/* Disclaimer */}
                 <RamadanDisclaimer error={error} />
