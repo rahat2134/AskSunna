@@ -6,7 +6,7 @@
  */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Moon, Sun, Menu, X, ChevronDown, Compass, Sparkles, Calendar } from 'lucide-react';
+import { Book, Moon, Sun, Menu, X, ChevronDown, Compass, Sparkles, Calendar, Clock } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const NavHeader = ({ isDark, toggleDarkMode }) => {
@@ -112,6 +112,14 @@ const NavHeader = ({ isDark, toggleDarkMode }) => {
                     <Calendar className="h-4 w-4" />
                     Ramadan Calendar
                   </Link>
+                  <Link
+                    to="/prayers"
+                    onClick={() => setShowAdvancedMenu(false)}
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <Clock className="h-4 w-4" />
+                    Prayer Times
+                  </Link>
                 </div>
               )}
             </div>
@@ -193,6 +201,14 @@ const NavHeader = ({ isDark, toggleDarkMode }) => {
                 >
                   <Calendar className="h-4 w-4" />
                   Ramadan Calendar
+                </Link>
+                <Link
+                  to="/prayers"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2 py-2 text-gray-600 dark:text-gray-300 hover:text-green-600"
+                >
+                  <Clock className="h-4 w-4" />
+                  Prayer Times
                 </Link>
               </div>
 

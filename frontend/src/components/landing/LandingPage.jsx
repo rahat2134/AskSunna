@@ -16,6 +16,7 @@ import ScrollToTop from '../ui/ScrollToTop';
 import { Toaster } from 'react-hot-toast';
 import NewsletterSection from './NewsletterSection';
 import TestimonialSection from './TestimonialSection';
+import PrayerTimesWidget from '../prayer/PrayerTimesWidget';
 
 const Feature = ({ icon: Icon, title, description }) => (
     <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
@@ -191,6 +192,31 @@ const LandingPage = () => {
                 </section>
 
                 <StatsSection />
+
+                <section className="py-12 bg-white dark:bg-gray-800">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center">
+                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                                Prayer Times
+                            </h2>
+                            <p className="text-base text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-12">
+                                Accurate prayer times based on your location with multiple calculation methods.
+                            </p>
+                        </div>
+                        <div className="flex justify-center">
+                            <PrayerTimesWidget />
+                        </div>
+                        <div className="text-center mt-8">
+                            <Link
+                                to="/prayers"
+                                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+                            >
+                                View Full Prayer Calendar
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+
                 <TestimonialSection />
                 <FAQSection />
                 <NewsletterSection />

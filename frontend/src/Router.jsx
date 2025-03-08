@@ -7,6 +7,7 @@ import { useAuth } from './context/AuthContext';
 import { ScholarSection } from './components/scholars';
 import QiblaPage from './components/QiblaPage';
 import RamadanTimesPage from './components/RamadanTimesPage';
+import PrayerTimesPage from './components/prayer/PrayerTimesPage';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -32,6 +33,7 @@ const Router = () => {
       <Route path="/scholars" element={<ScholarSection />} />
       <Route path="/qibla" element={<QiblaPage />} />
       <Route path="/ramadan" element={<RamadanTimesPage />} />
+      <Route path="/prayers" element={<PrayerTimesPage />} />
     </Routes>
   );
 };
