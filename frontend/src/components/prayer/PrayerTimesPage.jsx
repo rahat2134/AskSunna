@@ -5,10 +5,12 @@ import { useLocation } from '../../context/LocationContext';
 import LocationDisplay from '../ui/LocationDisplay';
 import PrayerTimesWidget from './PrayerTimesWidget';
 import { getMethodName, getPrayerTimesWithFallback, convertTo12HourFormat } from '../../services/prayerTimesAPI';
+import AddressInput from '../ui/AddressInput';
+import { getPrayerTimesByAddress } from '../../services/prayerTimesAPI';
 
 const PrayerTimesPage = () => {
     const navigate = useNavigate();
-    const { location, error: locationError } = useLocation();
+    const { location, manualAddress, error: locationError } = useLocation();
     const [date, setDate] = useState(new Date());
     const [prayerTimes, setPrayerTimes] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -32,16 +34,27 @@ const PrayerTimesPage = () => {
     // Fetch prayer times for the selected date
     useEffect(() => {
         const fetchPrayerTimes = async () => {
-            if (!location) return;
+            if (!location && !manualAddress) return;
 
             try {
                 setLoading(true);
-                const times = await getPrayerTimesWithFallback(
-                    date,
-                    location.latitude,
-                    location.longitude,
-                    calculationMethod
-                );
+                let times;
+
+                if (manualAddress) {
+                    times = await getPrayerTimesByAddress(
+                        date,
+                        manualAddress,
+                        calculationMethod
+                    );
+                } else {
+                    times = await getPrayerTimesWithFallback(
+                        date,
+                        location.latitude,
+                        location.longitude,
+                        calculationMethod
+                    );
+                }
+
                 setPrayerTimes(times);
                 setError(null);
             } catch (err) {
@@ -53,7 +66,7 @@ const PrayerTimesPage = () => {
         };
 
         fetchPrayerTimes();
-    }, [location, date, calculationMethod]);
+    }, [location, manualAddress, date, calculationMethod]);
 
     // Handle date navigation
     const changeDate = (days) => {
@@ -112,6 +125,10 @@ const PrayerTimesPage = () => {
 
                     {/* Location Display Component */}
                     <LocationDisplay />
+                    {/* Address Input */}
+                    <div className="mt-4">
+                        <AddressInput className="max-w-md mx-auto" placeholder="Enter city, country or full address..." />
+                    </div>
                 </div>
 
                 {locationError && (

@@ -414,3 +414,108 @@ export const convertTo12HourFormat = (time24) => {
     const period = parseInt(hours24, 10) >= 12 ? 'PM' : 'AM';
     return `${hours12}:${minutes} ${period}`;
 };
+
+export const getPrayerTimesByAddress = async (date, address, methodId = 3) => {
+    if (!address) {
+        throw new Error('Address is required');
+    }
+
+    // Format date as DD-MM-YYYY
+    const formattedDate = formatDateForAPI(date);
+
+    try {
+        const response = await fetch(
+            `https://api.aladhan.com/v1/timingsByAddress/${formattedDate}?address=${encodeURIComponent(address)}&method=${methodId}`
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch prayer times');
+        }
+
+        const data = await response.json();
+        return data.data.timings;
+    } catch (error) {
+        console.error('Error fetching prayer times by address:', error);
+        throw error;
+    }
+};
+
+export const getRamadanCalendarByAddress = async (address, year = 2025, methodId = 3) => {
+    if (!address) {
+        throw new Error('Address is required');
+    }
+
+    try {
+        // For Ramadan calendar, we need to fetch 30 days of data
+        const startDate = getRamadanStartDate(year);
+        const promises = [];
+
+        for (let i = 0; i < 30; i++) {
+            const currentDate = new Date(startDate);
+            currentDate.setDate(startDate.getDate() + i);
+            const formattedDate = formatDateForAPI(currentDate);
+
+            promises.push(
+                fetch(`https://api.aladhan.com/v1/timingsByAddress/${formattedDate}?address=${encodeURIComponent(address)}&method=${methodId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch prayer times');
+                        return response.json();
+                    })
+                    .then(data => ({
+                        date: new Date(currentDate),
+                        day: i + 1,
+                        gregorianDate: currentDate.getDate(),
+                        gregorianMonth: currentDate.getMonth(),
+                        gregorianYear: currentDate.getFullYear(),
+                        times: {
+                            suhoor: data.data.timings.Fajr,
+                            iftar: data.data.timings.Maghrib
+                        }
+                    }))
+            );
+        }
+
+        return await Promise.all(promises);
+    } catch (error) {
+        console.error('Error creating Ramadan calendar:', error);
+        throw error;
+    }
+};
+
+// Helper function to format date for API
+function formatDateForAPI(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+// Add a function to get prayer times with address support
+export const getPrayerTimesWithAddressSupport = async (date, coordinates, address, methodId = 3) => {
+    // If address is provided, use address-based API
+    if (address) {
+        return getPrayerTimesByAddress(date, address, methodId);
+    }
+
+    // Otherwise use coordinates-based API
+    if (coordinates && coordinates.latitude && coordinates.longitude) {
+        return getPrayerTimesWithFallback(date, coordinates.latitude, coordinates.longitude, methodId);
+    }
+
+    throw new Error('Either coordinates or address must be provided');
+};
+
+// Add a function to get Ramadan calendar with address support
+export const getRamadanCalendarWithAddressSupport = async (coordinates, address, year = 2025, methodId = 3) => {
+    // If address is provided, use address-based API
+    if (address) {
+        return getRamadanCalendarByAddress(address, year, methodId);
+    }
+
+    // Otherwise use coordinates-based API
+    if (coordinates && coordinates.latitude && coordinates.longitude) {
+        return getRamadanCalendarWithFallback(coordinates.latitude, coordinates.longitude, year, methodId);
+    }
+
+    throw new Error('Either coordinates or address must be provided');
+};

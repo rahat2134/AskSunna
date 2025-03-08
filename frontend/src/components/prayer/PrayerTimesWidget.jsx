@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Clock, AlertCircle } from 'lucide-react';
 import { useLocation } from '../../context/LocationContext';
 import { getMethodName, getPrayerTimesWithFallback, convertTo12HourFormat } from "../../services/prayerTimesAPI";
+import { getPrayerTimesByAddress } from '../../services/prayerTimesAPI';
 
 const PrayerTimesWidget = ({ methodId = 3 }) => {
-    const { location, error: locationError } = useLocation();
+    const { location, manualAddress, error: locationError } = useLocation();
     const [prayerTimes, setPrayerTimes] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -23,17 +24,28 @@ const PrayerTimesWidget = ({ methodId = 3 }) => {
     // Fetch prayer times
     useEffect(() => {
         const fetchPrayerTimes = async () => {
-            if (!location) return;
+            if (!location && !manualAddress) return;
 
             try {
                 setLoading(true);
                 const today = new Date();
-                const times = await getPrayerTimesWithFallback(
-                    today,
-                    location.latitude,
-                    location.longitude,
-                    methodId
-                );
+                let times;
+
+                if (manualAddress) {
+                    times = await getPrayerTimesByAddress(
+                        today,
+                        manualAddress,
+                        methodId
+                    );
+                } else {
+                    times = await getPrayerTimesWithFallback(
+                        today,
+                        location.latitude,
+                        location.longitude,
+                        methodId
+                    );
+                }
+
                 setPrayerTimes(times);
                 setError(null);
             } catch (err) {
@@ -45,7 +57,7 @@ const PrayerTimesWidget = ({ methodId = 3 }) => {
         };
 
         fetchPrayerTimes();
-    }, [location, methodId]);
+    }, [location, manualAddress, methodId]);
 
     // Determine next prayer and calculate time remaining
     useEffect(() => {

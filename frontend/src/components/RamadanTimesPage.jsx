@@ -6,6 +6,8 @@ import LocationDisplay from './ui/LocationDisplay';
 import RamadanTable from './ramadan/RamadanTable';
 import RamadanInfoBox from './ramadan/RamadanInfoBox';
 import RamadanDisclaimer from './ramadan/RamadanDisclaimer';
+import AddressInput from './ui/AddressInput';
+import { getRamadanCalendarByAddress } from '../services/prayerTimesAPI';
 import {
     getRamadanCalendarWithFallback,
     getMethodName
@@ -13,7 +15,7 @@ import {
 
 const RamadanTimesPage = () => {
     const navigate = useNavigate();
-    const { location, error } = useLocation();
+    const { location, manualAddress, error } = useLocation();
     const [loading, setLoading] = useState(true);
     const [ramadanDates, setRamadanDates] = useState([]);
     const [selectedYear, setSelectedYear] = useState(2025);
@@ -44,16 +46,27 @@ const RamadanTimesPage = () => {
 
     // Calculate Ramadan dates based on location
     const fetchRamadanCalendar = async () => {
-        if (!location) return;
+        if (!location && !manualAddress) return;
 
         try {
             setLoading(true);
-            const calendar = await getRamadanCalendarWithFallback(
-                location.latitude,
-                location.longitude,
-                selectedYear,
-                calculationMethod // Pass the selected method
-            );
+            let calendar;
+
+            if (manualAddress) {
+                calendar = await getRamadanCalendarByAddress(
+                    manualAddress,
+                    selectedYear,
+                    calculationMethod
+                );
+            } else {
+                calendar = await getRamadanCalendarWithFallback(
+                    location.latitude,
+                    location.longitude,
+                    selectedYear,
+                    calculationMethod
+                );
+            }
+
             setRamadanDates(calendar);
         } catch (err) {
             console.error('Error fetching Ramadan calendar:', err);
@@ -62,10 +75,11 @@ const RamadanTimesPage = () => {
         }
     };
 
+    // Update the useEffect:
     useEffect(() => {
-        if (!location) return;
+        if (!location && !manualAddress) return;
         fetchRamadanCalendar();
-    }, [location, selectedYear, calculationMethod]);
+    }, [location, manualAddress, selectedYear, calculationMethod]);
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -99,6 +113,10 @@ const RamadanTimesPage = () => {
 
                     {/* Location Display Component */}
                     <LocationDisplay />
+                    {/* Address Input */}
+                    <div className="mt-4">
+                        <AddressInput className="max-w-md mx-auto" placeholder="Enter city, country or full address..." />
+                    </div>
                 </div>
 
                 {error && (

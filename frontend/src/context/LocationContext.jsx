@@ -1,3 +1,4 @@
+// frontend/src/context/LocationContext.jsx
 import React, { createContext, useState, useEffect, useCallback, useContext } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -5,12 +6,14 @@ const LocationContext = createContext(null);
 
 export const LocationProvider = ({ children }) => {
     const [location, setLocation] = useState(null);
+    const [manualAddress, setManualAddress] = useState('');
     const [isLocating, setIsLocating] = useState(false);
     const [error, setError] = useState(null);
 
     const detectLocation = useCallback(async () => {
         setIsLocating(true);
         setError(null);
+        setManualAddress(''); // Clear manual address when auto-detecting
 
         if (!navigator.geolocation) {
             setError('Geolocation is not supported by your browser');
@@ -73,10 +76,28 @@ export const LocationProvider = ({ children }) => {
         }
     }, []);
 
+    // Set manual address
+    const setAddress = (address) => {
+        if (address && address.trim()) {
+            setManualAddress(address.trim());
+            // Clear coordinates-based location when using an address
+            setLocation(null);
+            localStorage.removeItem('asksunnah_location');
+            toast.success('Address set successfully');
+        }
+    };
+
     // Initialize location on mount
     useEffect(() => {
-        const savedLocation = localStorage.getItem('asksunnah_location');
+        // Check for saved manual address first
+        const savedAddress = localStorage.getItem('asksunnah_manual_address');
+        if (savedAddress) {
+            setManualAddress(savedAddress);
+            return;
+        }
 
+        // Then check for saved location
+        const savedLocation = localStorage.getItem('asksunnah_location');
         if (savedLocation) {
             try {
                 const parsedLocation = JSON.parse(savedLocation);
@@ -96,13 +117,22 @@ export const LocationProvider = ({ children }) => {
         }
     }, [detectLocation]);
 
+    // Save manual address to localStorage when it changes
+    useEffect(() => {
+        if (manualAddress) {
+            localStorage.setItem('asksunnah_manual_address', manualAddress);
+        }
+    }, [manualAddress]);
+
     return (
         <LocationContext.Provider
             value={{
                 location,
+                manualAddress,
                 isLocating,
                 error,
-                detectLocation
+                detectLocation,
+                setAddress
             }}
         >
             {children}
