@@ -1,6 +1,6 @@
 {
-  "name": "AskSunna",
-  "short_name": "AskSunna",
+  "name": "AskSunnah",
+  "short_name": "AskSunnah",
   "description": "Verified Islamic Q&A from authentic sources",
   "start_url": "/",
   "display": "standalone",
