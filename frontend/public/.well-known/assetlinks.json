@@ -1,0 +1,8 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.asksunnah.app",
+      "sha256_cert_fingerprints": ["B7:79:D1:61:01:F7:EB:02:32:2F:C1:7D:86:16:90:62:92:A1:19:6F:E1:16:00:FF:96:D5:6B:5E:91:4A:F4:5B"]
+    }
+  }]
