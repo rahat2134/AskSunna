@@ -16,6 +16,10 @@ const QiblaCompass = () => {
     const [error, setError] = useState(null);
     const [compass, setCompass] = useState(0);
     const [loading, setLoading] = useState(true);
+    // New state variables
+    const [manualRotation, setManualRotation] = useState(0);
+    const [isManualMode, setIsManualMode] = useState(false);
+    const [sensorActive, setSensorActive] = useState(false);
 
     // Mecca coordinates
     const MECCA_LAT = 21.4225;
@@ -34,6 +38,22 @@ const QiblaCompass = () => {
         return (qibla + 360) % 360;
     };
 
+
+    const handleOrientation = (event) => {
+        if (event.webkitCompassHeading) {
+            setCompass(event.webkitCompassHeading);
+            setSensorActive(true);
+        } else if (event.alpha) {
+            setCompass(360 - event.alpha);
+            setSensorActive(true);
+        }
+    };
+
+    const rotateManually = (amount) => {
+        setManualRotation((prev) => (prev + amount) % 360);
+        setIsManualMode(true);
+    };
+
     useEffect(() => {
         if (!navigator.geolocation) {
             setError('Geolocation is not supported by your browser');
@@ -50,14 +70,24 @@ const QiblaCompass = () => {
                 setDirection(qiblaDirection);
                 setLoading(false);
 
+                // Try to use device orientation
                 if (window.DeviceOrientationEvent) {
-                    window.addEventListener('deviceorientation', (event) => {
-                        if (event.webkitCompassHeading) {
-                            setCompass(event.webkitCompassHeading);
-                        } else if (event.alpha) {
-                            setCompass(360 - event.alpha);
-                        }
-                    });
+                    try {
+                        window.addEventListener('deviceorientation', handleOrientation, true);
+
+                        // Check if we're actually getting sensor data after a short delay
+                        setTimeout(() => {
+                            if (!sensorActive) {
+                                console.log("No orientation events received, switching to manual mode");
+                                setIsManualMode(true);
+                            }
+                        }, 1000);
+                    } catch (err) {
+                        console.error("Error accessing orientation", err);
+                        setIsManualMode(true);
+                    }
+                } else {
+                    setIsManualMode(true);
                 }
             },
             (error) => {
@@ -65,6 +95,10 @@ const QiblaCompass = () => {
                 setLoading(false);
             }
         );
+
+        return () => {
+            window.removeEventListener('deviceorientation', handleOrientation, true);
+        };
     }, []);
 
     if (loading) {
@@ -87,7 +121,9 @@ const QiblaCompass = () => {
     }
 
     const rotateStyle = {
-        transform: `rotate(${(direction || 0) - (compass || 0)}deg)`
+        transform: isManualMode
+            ? `rotate(${manualRotation}deg)`
+            : `rotate(${(direction || 0) - (compass || 0)}deg)`
     };
 
     return (
@@ -151,6 +187,33 @@ const QiblaCompass = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Manual Controls */}
+            <div className="flex justify-center space-x-6 mt-4 mb-6">
+                <button
+                    onClick={() => rotateManually(-10)}
+                    className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full text-green-700 dark:text-green-300"
+                    aria-label="Rotate left"
+                >
+                    <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                    onClick={() => rotateManually(10)}
+                    className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full text-green-700 dark:text-green-300"
+                    aria-label="Rotate right"
+                >
+                    <ChevronRight className="h-6 w-6" />
+                </button>
+            </div>
+
+            {isManualMode && (
+                <div className="bg-yellow-50 dark:bg-yellow-900/30 rounded-lg p-4 mb-6">
+                    <div className="flex items-center gap-2 text-yellow-700 dark:text-yellow-300">
+                        <AlertCircle className="h-5 w-5" />
+                        <p>Automatic compass is not available. Please use the rotation buttons to manually align the arrow with North, then read the Qibla direction.</p>
+                    </div>
+                </div>
+            )}
 
             {/* Direction Info */}
             <div className="text-center space-y-4">
