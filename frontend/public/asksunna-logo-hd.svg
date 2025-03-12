@@ -21,39 +21,72 @@
   <rect x="0" y="0" width="512" height="512" rx="128" ry="128" fill="url(#greenGradient)"/>
   
   <!-- Book Shape - Slightly Smaller -->
-  <path d="M126 136 L256 96 L386 136 L386 346 L256 386 L126 346 Z" 
+  <path d="M116 136 L256 91 L396 136 L396 346 L256 391 L116 346 Z" 
         fill="#ffffff" 
         stroke="#e2e8f0" 
         stroke-width="1.5"
         filter="url(#shadow)"
         rx="8" ry="8"/>
-  <path d="M126 136 L256 96 L256 386 L126 346 Z" 
+  <path d="M116 136 L256 91 L256 391 L116 346 Z" 
         fill="#f8fafc" 
         stroke="#e2e8f0" 
         stroke-width="1"
         rx="8" ry="8"/>
   
   <!-- Center Line of Book -->
-  <path d="M256 96 L256 386" 
+  <path d="M256 91 L256 391" 
         stroke="#e2e8f0" 
         stroke-width="2" 
         stroke-linecap="round"/>
   
-  <!-- Refined Arabic Calligraphy Lines (Right) -->
-  <path d="M280 176 L370 156 M280 226 L370 206 M280 276 L370 256" 
-        stroke="#15803d" 
-        stroke-width="12" 
-        stroke-linecap="round"/>
+  <!-- Arabic Text - Larger -->
+  <!-- Right Side Arabic -->
+  <text x="315" y="180" 
+        font-family="'Traditional Arabic', 'Amiri', serif" 
+        font-size="26"
+        text-anchor="middle"
+        fill="#15803d"
+        transform="rotate(-4, 315, 180)">بسم الله</text>
         
-  <!-- Refined Arabic Calligraphy Lines (Left) -->
-  <path d="M142 176 L232 156 M142 226 L232 206 M142 276 L232 256" 
-        stroke="#15803d" 
-        stroke-width="12" 
-        stroke-linecap="round"/>
+  <text x="315" y="230" 
+        font-family="'Traditional Arabic', 'Amiri', serif" 
+        font-size="26"
+        text-anchor="middle"
+        fill="#15803d"
+        transform="rotate(-4, 315, 230)">الرحمن</text>
+        
+  <text x="315" y="280" 
+        font-family="'Traditional Arabic', 'Amiri', serif" 
+        font-size="26"
+        text-anchor="middle"
+        fill="#15803d"
+        transform="rotate(-4, 315, 280)">الرحيم</text>
+        
+  <!-- Left Side Arabic -->
+  <text x="190" y="180" 
+        font-family="'Traditional Arabic', 'Amiri', serif" 
+        font-size="26"
+        text-anchor="middle"
+        fill="#15803d"
+        transform="rotate(-4, 190, 180)">القرآن</text>
+        
+  <text x="190" y="230" 
+        font-family="'Traditional Arabic', 'Amiri', serif" 
+        font-size="26"
+        text-anchor="middle"
+        fill="#15803d"
+        transform="rotate(-4, 190, 230)">والسنة</text>
+        
+  <text x="190" y="280" 
+        font-family="'Traditional Arabic', 'Amiri', serif" 
+        font-size="26"
+        text-anchor="middle"
+        fill="#15803d"
+        transform="rotate(-4, 190, 280)">النبوية</text>
         
   <!-- Enhanced Verification Checkmark -->
-  <circle cx="256" cy="316" r="40" fill="url(#greenGradient)" stroke="#ffffff" stroke-width="3" filter="url(#glow)"/>
-  <path d="M236 316 L250 330 L276 304" 
+  <circle cx="256" cy="335" r="38" fill="url(#greenGradient)" stroke="#ffffff" stroke-width="2.5" filter="url(#glow)"/>
+  <path d="M236 335 L250 349 L276 323" 
         stroke="white" 
         stroke-width="9" 
         stroke-linecap="round" 
@@ -61,14 +94,13 @@
         filter="url(#glow)"
         fill="none"/>
         
-  <!-- Brand Text - Slightly Spaced -->
-  <g transform="translate(256, 430)">
-    <!-- "Authentic Islamic Knowledge" Text -->
+  <!-- Brand Text - Larger -->
+  <g transform="translate(256, 450)">
     <text x="0" y="0" 
           font-family="'Segoe UI', Arial, sans-serif" 
-          font-size="22" 
-          font-weight="600" 
+          font-size="56" 
+          font-weight="700" 
           text-anchor="middle" 
-          fill="#ffffff">Authentic Islamic Knowledge</text>
+          fill="#ffffff">Islamic A.I.</text>
   </g>
 </svg>
