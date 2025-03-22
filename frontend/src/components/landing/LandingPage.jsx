@@ -81,7 +81,7 @@ const LandingPage = () => {
             document.documentElement.classList.remove('dark');
             localStorage.setItem('theme', 'light');
         }
-    }, [isDark]);
+    }, [isDark]); // This means the effect will run whenever the value of isDark changes.
 
     const toggleDarkMode = () => {
         setIsDark(!isDark);

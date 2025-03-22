@@ -23,7 +23,7 @@ const HeroSection = ({ isProUser }) => {
         }, 5000);
 
         return () => clearInterval(timer);
-    }, [images.length]);
+    }, [images.length]); // [images.length] is the dependency array. The effect will re-run if the length of the images array changes. This means if the number of images changes, the interval will be reset.
 
     return (
         <section className="relative py-10 sm:py-20 bg-[url('/islamic-pattern.svg')] bg-repeat bg-opacity-5">
